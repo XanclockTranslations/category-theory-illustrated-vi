@@ -243,7 +243,7 @@ try {
       }));
       if (JSON.stringify(contentsPages) === JSON.stringify(lastPages)) { stable = true; break; }
       await page.evaluate(pages => {
-        for (const span of document.querySelectorAll('.toc-page')) span.textContent = pages[span.dataset.target];
+        for (const span of document.querySelectorAll('.toc-page[data-target]')) span.textContent = pages[span.dataset.target];
       }, contentsPages);
       lastPages = contentsPages;
     }
