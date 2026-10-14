@@ -11,7 +11,8 @@
     "_chapters/01_set.md": "translations/vi/01_set.md",
     "_chapters/02_category.md": "translations/vi/02_category.md",
     "_chapters/03_monoid.md": "translations/vi/03_monoid.md",
-    "_chapters/04_order.md": "translations/vi/04_order.md"
+    "_chapters/04_order.md": "translations/vi/04_order.md",
+    "_chapters/05_logic.md": "translations/vi/05_logic.md"
   },
   "publicationFile": "translations/vi/publication.md",
   "contentsFile": "translations/vi/toc.json",
