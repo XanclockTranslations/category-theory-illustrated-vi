@@ -15,9 +15,13 @@ const expected = report.chapters.map(c=>{
  const eq=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
  const headings=t=>md.parse(t,{}).filter(x=>x.type==='heading_open').map(x=>x.tag);
  const images=t=>[...t.matchAll(/!\[([\s\S]*?)\]\(([^)]+)\)/g)].map(m=>({file:'_chapters/'+m[2].replace(/^\.\.\//,''),caption:m[1]}));
- const prose=t=>t.replace(/!\[[\s\S]*?\]\([^)]*\)/g,' ').replace(/\$\$[\s\S]*?\$\$|\$[^$\n]*?\$/g,' ').replace(/^[ \t]*\{:\s*\.?[\w-]+\s*\}[ \t]*\n/gm,'');
+ const prose=t=>{
+  const codes=[];
+  return t.replace(/```[^\n]*\n[\s\S]*?```/g,m=>{codes.push(m);return `AUDITCODE${codes.length-1}END`;}).replace(/!\[[\s\S]*?\]\([^)]*\)/g,' ').replace(/\$\$[\s\S]*?\$\$|\$[^$\n]*?\$/g,' ').replace(/^[ \t]*\{:\s*\.?[\w-]+\s*\}[ \t]*\n/gm,'').replace(/AUDITCODE(\d+)END/g,(_,i)=>codes[Number(i)]);
+ };
+ const blocks=t=>md.parse(t,{}).map(x=>x.type);
  return {file:c.file,html:md.render(prose(translated)),images:images(translated),formulas:math(translated).map(x=>({display:x.startsWith('$$'),tex:x.slice(x.startsWith('$$')?2:1,x.startsWith('$$')?-2:-1)})),
- invariants:{headingLevels: eq(headings(original),headings(translated)),math: eq(math(original),math(translated)),images: eq(images(original).map(x=>x.file),images(translated).map(x=>x.file)),fencedCode:eq(array(original,/```[^\n]*\n[\s\S]*?```/g),array(translated,/```[^\n]*\n[\s\S]*?```/g)),inlineCode:eq(array(original.replace(/```[^\n]*\n[\s\S]*?```/g,''),/`[^`]*`/g),array(translated.replace(/```[^\n]*\n[\s\S]*?```/g,''),/`[^`]*`/g))}};
+ invariants:{blockStructure:eq(blocks(original),blocks(translated)),headingLevels: eq(headings(original),headings(translated)),math: eq(math(original),math(translated)),images: eq(images(original).map(x=>x.file),images(translated).map(x=>x.file)),fencedCode:eq(array(original,/```[^\n]*\n[\s\S]*?```/g),array(translated,/```[^\n]*\n[\s\S]*?```/g)),inlineCode:eq(array(original.replace(/```[^\n]*\n[\s\S]*?```/g,''),/`[^`]*`/g),array(translated.replace(/```[^\n]*\n[\s\S]*?```/g,''),/`[^`]*`/g))}};
 });
 const executablePath=['C:/Program Files/Google/Chrome/Application/chrome.exe','/usr/bin/chromium'].find(p=>fs.existsSync(p));
 const browser=await chromium.launch({headless:true,executablePath});

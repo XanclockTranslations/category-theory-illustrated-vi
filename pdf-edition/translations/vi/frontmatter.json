@@ -8,7 +8,8 @@
   "translationAttribution": { "ai": "GPT-6.1 Sol (Ultra)", "prompting": "Bế Trọng Nghĩa", "handle": "@ichxorya" },
   "chapterSources": {
     "_chapters/00_about.md": "translations/vi/00_about.md",
-    "_chapters/01_set.md": "translations/vi/01_set.md"
+    "_chapters/01_set.md": "translations/vi/01_set.md",
+    "_chapters/02_category.md": "translations/vi/02_category.md"
   },
   "publicationFile": "translations/vi/publication.md",
   "contentsFile": "translations/vi/toc.json",
