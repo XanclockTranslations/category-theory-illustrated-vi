@@ -247,7 +247,7 @@ Nếu xem xét nó, bạn sẽ nhận thấy một tính chất thú vị của 
 
 ![Phép nối trong một poset pha màu](../04_order/color_mixing_poset_join.svg)
 
-### Thứ tự bộ phận của các số theo phép chia
+### Thứ tự bộ phận của các số theo tính chia hết
 
 Chúng ta đã thấy khi sắp thứ tự các số theo “lớn hơn hoặc bằng”, chúng tạo thành một thứ tự tuyến tính. Nhưng các số cũng có thể tạo thành thứ tự bộ phận; chẳng hạn, chúng tạo thành thứ tự bộ phận nếu sắp theo số nào là ước của số nào, nghĩa là nếu $a$ là ước của $b$ thì $a$ đứng trước $b$; chẳng hạn, vì $2 \times 5 = 10$, $2$ và $5$ đứng trước $10$ (nhưng $3$, chẳng hạn, không đứng trước $10$).
 
@@ -257,7 +257,7 @@ Và tình cờ (thực ra là vì lý do rất chính đáng), phép nối lại
 
 {: .theorem}
 
-> Trong thứ tự bộ phận của các số theo phép chia, phép nối của hai số bất kỳ là *bội chung nhỏ nhất* của chúng. Và *phép gặp* của chúng là *ước chung lớn nhất*.
+> Trong thứ tự bộ phận của các số theo tính chia hết, phép nối của hai số bất kỳ là *bội chung nhỏ nhất* của chúng. Và *phép gặp* của chúng là *ước chung lớn nhất*.
 
 ![Poset chia hết](../04_order/divides_poset_meet.svg)
 
@@ -265,7 +265,7 @@ Hãy tìm hiểu kỹ hơn một chút vì sao điều này xảy ra.
 
 ### Thứ tự bộ phận bao hàm
 
-Cho một bộ sưu tập các tập hợp chứa một tổ hợp của một tập hợp phần tử cho trước...
+Cho một họ các tập hợp chứa một tổ hợp của một tập hợp phần tử cho trước...
 
 ![Một poset pha màu](../04_order/color_mixing_poset_inclusion_subsets.svg)
 
@@ -273,7 +273,7 @@ Cho một bộ sưu tập các tập hợp chứa một tổ hợp của một t
 
 {: .definition}
 
-> *Thứ tự bao hàm* của một bộ sưu tập các tập hợp cho trước (thường là những tập hợp có một số phần tử chung) là thứ tự dựa trên quan hệ hai ngôi sau: $A$ đứng trước $B$ nếu $A$ *chứa* $B$, hay nói cách khác nếu $B$ là *tập hợp con* của $A$.
+> *Thứ tự bao hàm* của một họ các tập hợp cho trước (thường là những tập hợp có một số phần tử chung) là thứ tự dựa trên quan hệ hai ngôi sau: $A$ đứng trước $B$ nếu $A$ *chứa* $B$, hay nói cách khác nếu $B$ là *tập hợp con* của $A$.
 
 ![Một poset pha màu được sắp thứ tự theo quan hệ bao hàm](../04_order/color_mixing_poset_inclusion.svg)
 
@@ -292,7 +292,7 @@ Ví dụ thứ tự theo các ước của số cũng đẳng cấu với một 
 
 ![Poset chia hết](../04_order/divides_poset_inclusion.svg)
 
-Đến đây, chúng ta đã thấy hai thứ tự bộ phận khác nhau, một dựa trên pha màu và một dựa trên phép chia các số, có thể được biểu diễn bằng thứ tự bao hàm của mọi tổ hợp tập hợp có thể có từ một số *phần tử cơ bản* (các màu cơ bản trong trường hợp thứ nhất, và các số nguyên tố (hoặc luỹ thừa nguyên tố) trong trường hợp thứ hai). Nhiều thứ tự bộ phận khác cũng có thể được định nghĩa như vậy. Chính xác là những thứ tự nào? Một kết quả tuyệt vời gọi là *định lý biểu diễn của Birkhoff* trả lời câu hỏi ấy. Đó là những thứ tự bộ phận *hữu hạn* đáp ứng hai tiêu chí sau:
+Đến đây, chúng ta đã thấy hai thứ tự bộ phận khác nhau, một dựa trên pha màu và một dựa trên tính chia hết của các số, có thể được biểu diễn bằng thứ tự bao hàm của mọi tổ hợp tập hợp có thể có từ một số *phần tử cơ bản* (các màu cơ bản trong trường hợp thứ nhất, và các số nguyên tố (hoặc luỹ thừa nguyên tố) trong trường hợp thứ hai). Nhiều thứ tự bộ phận khác cũng có thể được định nghĩa như vậy. Chính xác là những thứ tự nào? Một kết quả tuyệt vời gọi là *định lý biểu diễn của Birkhoff* trả lời câu hỏi ấy. Đó là những thứ tự bộ phận *hữu hạn* đáp ứng hai tiêu chí sau:
 
 1. Mọi phần tử đều có *phép nối* và *phép gặp*.
 2. Các phép *gặp* và *nối* ấy *phân phối* đối với nhau; nghĩa là nếu ký hiệu phép nối và phép gặp bằng $∨$ hoặc $∧$ thì $x ∨ (y ∧ z) = (x ∨ y) ∧ (x ∨ z)$.
@@ -406,7 +406,7 @@ Sắp thứ tự khái niệm thành một dàn có thể giúp ta thấy các k
 
 Chúng ta đã nhắc đến đẳng cấu thứ tự vài lần, nên đã đến lúc nói rõ chúng là gì.
 
-Cho hai tập hợp (chúng ta sẽ dùng thứ tự bộ phận của các số theo phép chia và thứ tự bao hàm của số nguyên tố làm ví dụ), một đẳng cấu giữa chúng gồm hai hàm sau:
+Cho hai tập hợp (chúng ta sẽ dùng thứ tự bộ phận của các số theo tính chia hết và thứ tự bao hàm của số nguyên tố làm ví dụ), một đẳng cấu giữa chúng gồm hai hàm sau:
 
 1. Một hàm từ thứ tự bao hàm của số nguyên tố đến thứ tự của các số (trong trường hợp này chỉ là *phép nhân* mọi phần tử của tập hợp).
 2. Một hàm từ thứ tự của các số đến thứ tự bao hàm của số nguyên tố (đây là phép toán gọi là *phân tích một số ra thừa số nguyên tố*, gồm việc tìm tập hợp các số nguyên tố mà khi nhân với nhau sẽ cho số ấy).
@@ -549,7 +549,7 @@ Vậy chúng ta nghi rằng tiền thứ tự là phạm trù, nhưng có thực
 
 {: .definition}
 
-> Phạm trù là một bộ sưu tập các *đối tượng* (ta có thể hình dung như những điểm) và *cấu xạ* (mũi tên) đi từ đối tượng này đến đối tượng khác, trong đó:
+> Phạm trù là một họ các *đối tượng* (ta có thể hình dung như những điểm) và *cấu xạ* (mũi tên) đi từ đối tượng này đến đối tượng khác, trong đó:
 > 1. Mỗi đối tượng phải có cấu xạ đồng nhất.
 > 2. Phải có cách hợp thành hai cấu xạ có chữ ký kiểu thích hợp thành cấu xạ thứ ba theo cách có tính kết hợp.
 

@@ -597,7 +597,7 @@ Với phạm trù chỉ có một đối tượng, cũng sẽ có một cấu x�
 
 > 2. Phải có một cách hợp thành hai cấu xạ có chữ ký kiểu phù hợp thành một cấu xạ thứ ba sao cho phép hợp thành có tính kết hợp.
 
-Nhưng nếu phạm trù có một đối tượng, mọi cấu xạ đều có cùng chữ ký kiểu (chúng chỉ là $A \to A$). Vậy *tất cả các cấu xạ đều có thể hợp thành với nhau*. Phép toán monoid thực hiện chính điều ấy --- với hai đối tượng bất kỳ (hay hai cấu xạ, nếu dùng thuật ngữ phạm trù), nó tạo ra đối tượng thứ ba.
+Nhưng nếu phạm trù có một đối tượng, mọi cấu xạ đều có cùng chữ ký kiểu (chúng chỉ là $A \to A$). Vậy *tất cả các cấu xạ đều có thể hợp thành với nhau*. Phép toán monoid thực hiện chính điều ấy --- với hai đối tượng bất kỳ (hay hai cấu xạ, nếu dùng thuật ngữ phạm trù), nó tạo ra một phần tử thứ ba.
 
 Ta thấy rằng, ngoài chi tiết hơi dễ gây nhầm lẫn là *các đối tượng monoid là các cấu xạ* khi nhìn theo ngôn ngữ phạm trù, mô tả này chính xác là mô tả monoid.
 
@@ -724,7 +724,7 @@ làm phần tử đồng nhất:
 - Tính kết hợp: `(a + b) + c === a + (b + c)`
 - Đồng nhất: `s + "" === "" + s = s`
 
-Tất cả các số tự nhiên đối với hàm *maximum*, với 0 làm phần tử đồng nhất:
+Tất cả các số tự nhiên đối với hàm *lấy giá trị lớn nhất*, với 0 làm phần tử đồng nhất:
  - Tính kết hợp: `max(max(a,b), c) === max(a, max(b,c))`
  - Đồng nhất: `max(a, 0) = a`
 

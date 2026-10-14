@@ -303,7 +303,7 @@ Vì sao hàm trong lập trình lại khác? Tìm ra cách mã hoá các hàm *c
 
 ### Ngôn ngữ lập trình hàm thuần tuý
 
-Nhiều người cảm thấy hàm toán học quá hạn chế và khó dùng. Có thể họ cũng có lý, nhưng hàm toán học có một ưu thế lớn so với hàm phi toán học &mdash; chữ ký kiểu của chúng cho bạn biết gần như mọi điều về những gì hàm làm (đây có lẽ là lý do hầu hết các ngôn ngữ lập trình hàm có kiểu mạnh). Vì vậy, có những ngôn ngữ chỉ cho phép hàm toán học, và trong đó sự tương đồng này đúng. Chúng được gọi là ngôn ngữ lập trình *hàm thuần tuý*. Một ví dụ về ngôn ngữ như vậy là Haskell, mà chúng ta sẽ gặp sau.
+Nhiều người cảm thấy hàm toán học quá hạn chế và khó dùng. Có thể họ cũng có lý, nhưng hàm toán học có một ưu thế lớn so với hàm phi toán học &mdash; chữ ký kiểu của chúng cho bạn biết gần như mọi điều về những gì hàm làm (đây có lẽ là lý do hầu hết các ngôn ngữ lập trình hàm có kiểu mạnh). Vì vậy, có những ngôn ngữ chỉ cho phép hàm toán học, và trong đó sự đồng nhất này đúng. Chúng được gọi là ngôn ngữ lập trình *hàm thuần tuý*. Một ví dụ về ngôn ngữ như vậy là Haskell, mà chúng ta sẽ gặp sau.
 
 Những ngôn ngữ ấy không hỗ trợ các hàm thực hiện những thao tác như hiển thị thứ gì đó lên màn hình, làm I/O, v.v. (trong bối cảnh này, những thao tác ấy được gọi là “hiệu ứng phụ”.
 
