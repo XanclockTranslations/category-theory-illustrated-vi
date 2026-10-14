@@ -29,15 +29,16 @@ git switch -c vietnamese-translation
 
 Keep the author's repository as `upstream` and this personal fork as `origin`. Do not merge our layout changes into `main` merely to start a translation branch.
 
-## Vietnamese frontmatter review
+## Vietnamese machine translation
 
-The `vietnamese-translation` branch contains the first Vietnamese review pass:
-the cover, edition notice, chapter overview, complete contents labels, and the
-Introduction through its acknowledgments. Chapter 1 (Sets) has not been
-translated. This pass is one commit and waits for the user's content review
-before work can continue.
+The `vietnamese-translation` branch contains the Vietnamese machine translation.
+AI: **GPT-6.1 Sol (Ultra)**. Prompting: **Bế Trọng Nghĩa @ichxorya**.
+The first commit covered the cover through the Introduction. On 15 October 2026,
+the user authorized automatic continuation through the chapters, one commit per
+chapter. The translation manifest records the completed consecutive chapters.
 
-Run `pnpm --dir pdf-edition build:vi:frontmatter` for the 16-page Book preview.
+Run `pnpm --dir pdf-edition build:vi` for the current Vietnamese Book edition.
+Use `build:vi:frontmatter` to reproduce an introduction-only preview.
 See [the Vietnamese review guide](pdf-edition/translations/vi/README.md) and
 [translation review notes](pdf-edition/translations/vi/review-notes.md).
 

@@ -8,11 +8,15 @@ import { editionDir, repoDir, config, collectSource, verifyLock, assetPath, hash
 import { normalizePdfNavigation } from './pdf_navigation.mjs';
 import { removeCoverFurniture } from './pdf_cover.mjs';
 import { loadVietnameseFrontmatter } from './vi_frontmatter.mjs';
+import { localizeDiagrams } from './vi_diagrams.mjs';
 
 const profiles = JSON.parse(fs.readFileSync(path.join(editionDir, 'profiles.json'), 'utf8'));
 const args = process.argv.slice(2);
 const isVietnameseFrontmatter = args.length === 1 && args[0] === '--vi-frontmatter';
-if (args.length && !isVietnameseFrontmatter) throw new Error('Usage: node tools/build.mjs [--vi-frontmatter]. Both builds use the Book layout.');
+const isVietnamese = isVietnameseFrontmatter || args[0] === '--vi';
+const through = isVietnameseFrontmatter ? 0 : args.length === 3 && args[1] === '--through' ? Number(args[2]) : null;
+if (args.length && !isVietnameseFrontmatter && !(args[0] === '--vi' && (args.length === 1 || args.length === 3 && args[1] === '--through')))
+  throw new Error('Usage: node tools/build.mjs [--vi [--through N] | --vi-frontmatter].');
 const profileNames = ['book'];
 const acceptedSource = collectSource();
 const lock = verifyLock(acceptedSource);
@@ -47,9 +51,9 @@ md.renderer.rules.math = (tokens, index) => {
 md.renderer.rules.heading_open = (tokens, index, options, env, self) => self.renderToken(tokens, index, options) + `<a class="heading-link" href="#${tokens[index].attrGet('id')}">`;
 md.renderer.rules.heading_close = (tokens, index, options, env, self) => '</a>' + self.renderToken(tokens, index, options);
 
-const translation = isVietnameseFrontmatter ? loadVietnameseFrontmatter(acceptedSource, md, lock) : null;
+const translation = isVietnamese ? loadVietnameseFrontmatter(acceptedSource, md, lock, through) : null;
 const source = translation?.source ?? acceptedSource;
-const edition = translation ? { ...config, ...translation.config } : config;
+const edition = translation ? { ...config, ...translation.config, ...(isVietnameseFrontmatter ? {outputName: 'category-theory-illustrated-vi-frontmatter-book.pdf'} : {}) } : config;
 
 const figureReports = [];
 md.renderer.rules.image = (tokens, index) => {
@@ -68,7 +72,7 @@ md.renderer.rules.image = (tokens, index) => {
   }
   svg = svg.replace(/<svg\b/, `<svg role="img" aria-label="${escape(alt)}" data-source="${file}"`);
   figureReports.push({ number, file, caption: alt });
-  return `<figure id="figure-${number}" class="diagram" data-source="${file}">${svg}<figcaption><span class="figure-number">Figure ${number}.</span> ${md.renderInline(alt)}</figcaption></figure>`;
+  return `<figure id="figure-${number}" class="diagram" data-source="${file}">${svg}<figcaption><span class="figure-number">${translation ? 'Hình' : 'Figure'} ${number}.</span> ${md.renderInline(alt)}</figcaption></figure>`;
 };
 
 const headings = [];
@@ -155,7 +159,7 @@ const tocHeadings = translation?.tocHeadings ?? headings.filter(h => h.level <= 
 const renderedHeadingIds = new Set(headings.map(h => h.id));
 const linkedTocHeadings = tocHeadings.filter(h => renderedHeadingIds.has(h.id));
 if (translation) for (const h of linkedTocHeadings) {
-  if (headings.find(actual => actual.id === h.id).title !== h.title) throw new Error(`Introduction and contents translations differ: ${h.id}`);
+    if (headings.find(actual => actual.id === h.id).title !== h.title) throw new Error(`Chapter and contents translations differ: ${h.id}`);
 }
 const toc = tocHeadings.map(h => {
   const linked = renderedHeadingIds.has(h.id);
@@ -177,7 +181,7 @@ function profileStyle(p) {
 }
 function documentHtml(p) {
   return `<!doctype html><html lang="${edition.language}"><head><meta charset="utf-8"><title>${edition.title} — ${p.label}</title>${fontCss}<link rel="stylesheet" href="${url(path.join(editionDir, 'styles/full-book.css'))}">${profileStyle(p)}
-<script>window.MathJax={tex:{inlineMath:[['\\\\(','\\\\)']],displayMath:[['\\\\[','\\\\]']],processEscapes:true},options:{enableMenu:false},startup:{typeset:false,ready(){MathJax.startup.defaultReady();MathJax.startup.promise.then(async()=>{await document.fonts.ready;await MathJax.typesetPromise();window.mathDone=true})}}};</script><script src="${url(path.join(editionDir, 'node_modules/mathjax/es5/tex-chtml.js'))}"></script></head><body>
+<script>window.MathJax={tex:{inlineMath:[['\\\\(','\\\\)']],displayMath:[['\\\\[','\\\\]']],processEscapes:true},options:{enableMenu:false},startup:{typeset:false,ready(){MathJax.startup.defaultReady();MathJax.startup.promise.then(async()=>{await document.fonts.ready;${translation ? `(${localizeDiagrams.toString()})(${JSON.stringify(translation.diagramLabels)});` : ''}await MathJax.typesetPromise();window.mathDone=true})}}};</script><script src="${url(path.join(editionDir, 'node_modules/mathjax/es5/tex-chtml.js'))}"></script></head><body>
 <section class="cover"><img src="${url(coverPath)}" alt="${translation ? escape(edition.ui.coverAlt) : 'Category Theory Illustrated, by Jencel Panic'}"></section>
 <section class="publication">${translation ? translation.publication : `<h1>About this edition</h1><p><strong>Category Theory Illustrated</strong> by <strong>Jencel Panic</strong>.</p><p>This independently typeset edition reconciles the published Markdown chapters with the fuller EPUB supplied in the author’s public repository. It includes the additional interludes, addenda, and exercise answers. It is an unofficial adaptation and is not endorsed by the author.</p><p>The supplied fuller edition carries this notice: <strong>“Creative Commons Non-Commercial Share Alike 4.0”.</strong> This adaptation is offered under <a href="${config.licenseUrl}">Creative Commons Attribution–NonCommercial–ShareAlike 4.0 International</a>. Please retain attribution, identify adaptations, and share adaptations under the same license.</p><p>Original work: <a href="${config.sourceUrl}">Category Theory Illustrated online</a><br>Source: <a href="${config.repositoryUrl}">Author’s public repository</a></p><p>Adaptations: page layout, typography, visible numbered captions derived from the author’s image descriptions, definition and theorem styling, linked contents, chapter navigation, and PDF bookmarks. Small markup repairs are recorded in the accompanying build report. English prose and illustrations remain credited to Jencel Panic.</p><p>Text uses ${p.bodyFont}; headings and diagram font fallbacks use Noto Sans, licensed under the SIL Open Font License. Mathematics is typeset with MathJax.</p><p>Source date: ${lock.upstreamDate.slice(0, 10)}. This edition includes the published chapters, additional interludes, and exercise answers.</p><p>Support the author through the <a href="https://abuseofnotation.gumroad.com/">official editions</a> or <a href="https://www.patreon.com/abuseofnotation">Patreon</a>.</p>`}</section>
 <nav class="overview" aria-label="${translation ? edition.ui.overviewLabel : 'Chapter overview'}"><h1>${translation ? edition.ui.overviewHeading : 'Chapter overview'}</h1>${overview}<p>${translation ? edition.ui.overviewInstruction : 'Use the detailed contents on the following pages, or the PDF bookmarks, to find individual topics, interludes, and exercise answers.'}</p></nav><nav id="contents" class="contents" aria-label="${translation ? edition.ui.contentsLabel : 'Detailed contents'}"><h1>${translation ? edition.ui.contentsHeading : 'Contents'}</h1>${translation ? `<p class="contents-notice">${edition.ui.contentsNotice}</p>` : ''}<ul>${toc}</ul></nav>${chaptersHtml}</body></html>`;
@@ -190,7 +194,7 @@ try {
   for (const profileName of profileNames) {
     const profile = translation ? { ...profiles[profileName], label: 'Bố cục sách' } : profiles[profileName];
     const html = documentHtml(profile);
-    const buildStem = translation ? 'vi-frontmatter' : 'fuller';
+    const buildStem = translation ? isVietnameseFrontmatter ? 'vi-frontmatter' : 'vi' : 'fuller';
     const htmlPath = path.join(outputDir, `book-${buildStem}-${profileName}.html`);
     fs.writeFileSync(htmlPath, html);
     const page = await browser.newPage({ viewport: { width: 1000, height: 1000 } });
@@ -212,6 +216,7 @@ try {
       captionFormulaCount: document.querySelectorAll('figcaption mjx-container').length,
       imageCount: document.querySelectorAll('figure.diagram svg').length,
       captionCount: document.querySelectorAll('figure.diagram figcaption').length,
+      localizedDiagramLabels: window.localizedDiagramLabels ?? [],
       unprocessedMarkup: [...document.querySelectorAll('p')].filter(el => /^\{:\s/.test(el.textContent)).map(el => el.textContent),
       wideElements: [...document.querySelectorAll('.chapter p,.chapter table,.chapter pre,.chapter mjx-container')].filter(el => el.scrollWidth > el.clientWidth + 5).slice(0, 20).map(el => ({ tag: el.tagName, text: el.textContent.slice(0, 100), width: el.scrollWidth, available: el.clientWidth }))
     }));
@@ -245,12 +250,12 @@ try {
     if (!stable) throw new Error('Contents page numbers did not stabilize after four print passes.');
     const cleanCover = await removeCoverFurniture(bytes);
     bytes = cleanCover.bytes;
-    const normalized = await normalizePdfNavigation(bytes, headings, { title: translation ? `${edition.title} - Phần mở đầu - ${profile.label}` : `${config.title} — Fuller English edition — ${profile.label}`, author: config.author, subject: translation ? edition.ui.pdfSubject : 'Fuller English source edition', language: edition.language });
+    const normalized = await normalizePdfNavigation(bytes, headings, { title: translation ? `${edition.title} - ${edition.editionLabel} - ${profile.label}` : `${config.title} — Fuller English edition — ${profile.label}`, author: config.author, subject: translation ? edition.ui.pdfSubject : 'Fuller English source edition', language: edition.language });
     bytes = normalized.bytes;
     const pdfPath = path.join(outputDir, 'pdf', edition.outputName);
     fs.writeFileSync(pdfPath, bytes);
     fs.writeFileSync(htmlPath, html.replace(/(<span class="toc-page" data-target="([^"]+)">)<\/span>/g, (_, open, id) => `${open}${contentsPages[id]}</span>`));
-    const report = { upstreamRef: lock.upstreamRef, edition: edition.editionLabel, distribution: config.distribution, profile: { name: profileName, ...profile }, cover: { source: coverMeta.source, output: coverMeta.output, sourceCanonicalSha256: coverMeta.sourceCanonicalSha256, outputCanonicalSha256: coverMeta.outputCanonicalSha256, nativePathCount: coverMeta.nativePathCount, rasterImages: coverMeta.rasterImages, externalImages: coverMeta.externalImages, renderMode: coverMeta.renderMode, furnitureRemoval: cleanCover.report }, chapters: chapterReports, imageReferenceCount: renderedImageCount, uniqueImageCount: translation ? 0 : lock.uniqueImageCount, figures: figureReports, headings, ...(translation ? { translation: translation.review, tocHeadings } : {}), ...checks, pageCount: normalized.pageCount, printPasses: printPasses + 1, contentsPages, navigation: normalized.normalizationReport, renderOnlyChanges: changes, consoleErrors, pdfSha256: hash(bytes), browserVersion: browser.version() };
+    const report = { upstreamRef: lock.upstreamRef, edition: edition.editionLabel, distribution: config.distribution, profile: { name: profileName, ...profile }, cover: { source: coverMeta.source, output: coverMeta.output, sourceCanonicalSha256: coverMeta.sourceCanonicalSha256, outputCanonicalSha256: coverMeta.outputCanonicalSha256, nativePathCount: coverMeta.nativePathCount, rasterImages: coverMeta.rasterImages, externalImages: coverMeta.externalImages, renderMode: coverMeta.renderMode, furnitureRemoval: cleanCover.report }, chapters: chapterReports, imageReferenceCount: renderedImageCount, uniqueImageCount: new Set(source.imageRefs.map(r => r.file)).size, figures: figureReports, headings, ...(translation ? { translation: translation.review, tocHeadings } : {}), ...checks, pageCount: normalized.pageCount, printPasses: printPasses + 1, contentsPages, navigation: normalized.normalizationReport, renderOnlyChanges: changes, consoleErrors, pdfSha256: hash(bytes), browserVersion: browser.version() };
     fs.writeFileSync(path.join(outputDir, `build-report-${buildStem}-${profileName}.json`), JSON.stringify(report, null, 2) + '\n');
     console.log(`Built ${pdfPath}\n${normalized.pageCount} pages; ${checks.bodyFormulaCount} body formulas + ${checks.captionFormulaCount} caption formulas; ${renderedImageCount} captioned diagrams; ${normalized.bookmarkCount} bookmarks. Potential wide elements: ${checks.wideElements.length}`);
     await page.close();

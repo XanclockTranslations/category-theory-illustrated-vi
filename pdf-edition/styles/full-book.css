@@ -22,6 +22,9 @@ blockquote > p:last-child { margin-bottom: 0; }
 .callout.definition::before { content: 'DEFINITION'; color: #12628a; }
 .callout.theorem { border-color: #6852a1; background: #f7f5fb; }
 .callout.theorem::before { content: 'THEOREM'; color: #6852a1; }
+html[lang="vi"] .callout.definition::before { content: 'ĐỊNH NGHĨA'; }
+html[lang="vi"] .callout.theorem::before { content: 'ĐỊNH LÝ'; }
+html[lang="vi"] .callout.nota-bene::before { content: 'LƯU Ý'; }
 .callout.nota-bene { border-color: #d79040; background: #fcf8f1; }
 .callout.nota-bene::before { content: 'NOTE'; color: #8a5c27; }
 .diagram { margin: 4mm auto 5mm; padding: 0; max-width: 100%; break-inside: avoid; text-align: center; }

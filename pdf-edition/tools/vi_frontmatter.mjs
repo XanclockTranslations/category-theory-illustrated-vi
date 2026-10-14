@@ -1,8 +1,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { editionDir, hash, normalizedSource, sourceProjection } from './source.mjs';
+import { editionDir, hash, normalizedSource, sourceProjection, assetPath } from './source.mjs';
 
-export function loadVietnameseFrontmatter(acceptedSource, md, lock) {
+export function loadVietnameseFrontmatter(acceptedSource, md, lock, through = null) {
   const inputHashes = {};
   const read = relative => {
     const target = path.resolve(editionDir, relative);
@@ -12,11 +12,14 @@ export function loadVietnameseFrontmatter(acceptedSource, md, lock) {
     return content;
   };
   const config = JSON.parse(read('translations/vi/frontmatter.json'));
+  const selectedFiles = Object.keys(config.chapterSources);
+  const acceptedFiles = acceptedSource.chapters.map(c => c.file);
   if (config.sourceRevision !== lock.upstreamRef || config.language !== 'vi' ||
-      config.stopBefore !== '_chapters/01_set.md' ||
-      JSON.stringify(Object.keys(config.chapterSources)) !== '["_chapters/00_about.md"]') {
-    throw new Error('This review build must translate only the material before Chapter 1 from the accepted source.');
-  }
+      !selectedFiles.length || JSON.stringify(selectedFiles) !== JSON.stringify(acceptedFiles.slice(0, selectedFiles.length)))
+    throw new Error('Vietnamese chapters must form a consecutive prefix of the locked source.');
+  const last = through ?? selectedFiles.length - 1;
+  if (!Number.isInteger(last) || last < 0 || last >= selectedFiles.length)
+    throw new Error('Requested Vietnamese chapter is not yet accepted in the translation manifest.');
   const outline = [];
   for (const [chapterIndex, chapter] of acceptedSource.chapters.entries()) {
     const tokens = md.parse(chapter.content, {});
@@ -40,27 +43,36 @@ export function loadVietnameseFrontmatter(acceptedSource, md, lock) {
       throw new Error(`Missing or stale Vietnamese contents translation: ${heading.id}`);
     }
   }
-  const chapters = acceptedSource.chapters.filter(chapter => config.chapterSources[chapter.file]).map(chapter => ({
+  const chapters = acceptedSource.chapters.slice(0, last + 1).map(chapter => ({
     ...chapter, translationFile: config.chapterSources[chapter.file],
     content: sourceProjection(read(config.chapterSources[chapter.file]))
   }));
-  const aboutHeadings = md.parse(chapters[0].content, {}).filter(token => token.type === 'heading_open');
-  const sourceAboutHeadings = outline.filter(heading => heading.chapterIndex === 0);
-  if (aboutHeadings.length !== sourceAboutHeadings.length || aboutHeadings.some((token, i) => Number(token.tag.slice(1)) !== sourceAboutHeadings[i].level)) {
-    throw new Error('Translated introduction headings differ in number or level from the accepted source.');
+  for (const [index, chapter] of chapters.entries()) {
+    const actual = md.parse(chapter.content, {}).filter(token => token.type === 'heading_open');
+    const original = outline.filter(heading => heading.chapterIndex === index);
+    if (actual.length !== original.length || actual.some((token, i) => Number(token.tag.slice(1)) !== original[i].level))
+      throw new Error(`Translated heading structure differs: ${chapter.file}`);
+    const urls = text => [...text.matchAll(/!\[[\s\S]*?\]\(([^)]+)\)/g)].map(m => m[1]);
+    if (JSON.stringify(urls(chapter.content)) !== JSON.stringify(urls(acceptedSource.chapters[index].content)))
+      throw new Error(`Translated illustration sequence differs: ${chapter.file}`);
   }
+  const imageRefs = chapters.flatMap(c => [...c.content.matchAll(/!\[[\s\S]*?\]\(([^)]+)\)/g)].map(m => ({chapter: c.file, url: m[1], file: assetPath(m[1])})));
+  const diagramLabels = chapters.flatMap(c => {
+    const file = `translations/vi/diagrams/${path.basename(c.file, '.md')}.json`;
+    return fs.existsSync(path.join(editionDir, file)) ? JSON.parse(read(file)) : [];
+  });
   const publicationTokens = md.parse(read(config.publicationFile), {});
   const publicationHeadings = publicationTokens.filter(token => token.type === 'heading_open');
-  if (publicationHeadings.length !== 1) throw new Error('The edition notice must have one title.');
-  publicationHeadings[0].attrSet('id', 'edition-notice');
+  if (publicationHeadings.filter(t => t.tag === 'h1').length !== 1) throw new Error('The edition notice must have one main title.');
+  publicationHeadings.forEach((token, i) => token.attrSet('id', i ? `edition-notice-${i}` : 'edition-notice'));
   const publication = md.renderer.render(publicationTokens, md.options, {});
   return {
-    config, publication, inputHashes,
-    source: { ...acceptedSource, chapters, imageRefs: [] },
+    config, publication, inputHashes, diagramLabels,
+    source: { ...acceptedSource, chapters, imageRefs },
     tocHeadings: expected.map(heading => ({ ...heading, title: entries.get(heading.id).title })),
-    review: { scope: 'cover-through-introduction', stopBefore: config.stopBefore,
+    review: { scope: last ? `cover-through-chapter-${last}` : 'cover-through-introduction', stopBefore: acceptedFiles[last + 1] ?? null,
       status: config.status, translatedSources: chapters.map(chapter => chapter.file),
-      contentsEntryCount: expected.length, futureContentsEntryCount: expected.filter(heading => heading.chapterIndex > 0).length,
+      contentsEntryCount: expected.length, futureContentsEntryCount: expected.filter(heading => heading.chapterIndex > last).length,
       acceptedSourceRevision: lock.upstreamRef, acceptedSourceHashes: Object.fromEntries(chapters.map(chapter => [chapter.file, acceptedSource.hashes[chapter.file]])),
       translationInputHashes: inputHashes }
   };

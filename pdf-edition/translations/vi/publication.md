@@ -2,7 +2,9 @@
 
 **Lý thuyết phạm trù minh hoạ**, của **Jencel Panic**.
 
-Bản dịch tiếng Việt này dựa trên bản chế bản tiếng Anh đã đối chiếu các chương Markdown được công bố với bản EPUB đầy đủ hơn trong kho mã công khai của tác giả. Bản nguồn đầy đủ hơn có các phần đọc thêm, phần bổ sung và lời giải bài tập. Đây là bản chuyển ngữ và chế bản độc lập, không phải ấn bản do tác giả bảo trợ.
+Bản dịch máy tiếng Việt này dựa trên bản chế bản tiếng Anh đã đối chiếu các chương Markdown được công bố với bản EPUB đầy đủ hơn trong kho mã công khai của tác giả. Bản nguồn đầy đủ hơn có các phần đọc thêm, phần bổ sung và lời giải bài tập. Đây là bản chuyển ngữ và chế bản độc lập, không phải ấn bản do tác giả bảo trợ.
+
+**Thông tin về bản dịch:** AI được sử dụng là **GPT-6.1 Sol (Ultra)**. Người thực hiện prompting là **Bế Trọng Nghĩa [@ichxorya](https://github.com/ichxorya)**.
 
 Bản nguồn đầy đủ hơn ghi giấy phép: **“Creative Commons Non-Commercial Share Alike 4.0”.** Bản chuyển ngữ này được phát hành theo [Creative Commons Ghi công - Phi thương mại - Chia sẻ tương tự 4.0 Quốc tế (CC BY-NC-SA 4.0)](https://creativecommons.org/licenses/by-nc-sa/4.0/). Vui lòng ghi công tác giả, nêu rõ những thay đổi và chia sẻ các bản chuyển thể theo cùng giấy phép.
 
@@ -14,6 +16,6 @@ Các thay đổi của bản chế bản gồm bố cục trang, kiểu chữ, c
 
 Văn bản dùng Noto Serif; tiêu đề và phông dự phòng trong sơ đồ dùng Noto Sans. Các phông chữ này được cấp phép theo SIL Open Font License. Công thức toán được chế bản bằng MathJax.
 
-Ngày của bản nguồn được chọn: 06-06-2026. **Bản xem thử để duyệt lần này chỉ gồm bìa và các phần trước Chương 1.** Chưa dịch nội dung Chương 1 hay các chương tiếp theo; số trang trong mục lục của các chương ấy chưa được xác định.
+Ngày của bản nguồn được chọn: 06-06-2026. Bản dịch được bổ sung theo từng chương. Mục lục ghi số trang và liên kết cho các phần đã có trong bản dựng; dấu - cho biết phần chưa được đưa vào bản dựng ấy. Đây là bản dịch máy đang được rà soát; ghi chú của từng chương lưu các lựa chọn thuật ngữ và những điểm cần kiểm tra trong nguyên tác.
 
 Bạn có thể ủng hộ tác giả qua [các ấn bản chính thức](https://abuseofnotation.gumroad.com/) hoặc [Patreon](https://www.patreon.com/abuseofnotation).

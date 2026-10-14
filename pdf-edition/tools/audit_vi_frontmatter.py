@@ -72,7 +72,7 @@ def main():
         input=json.dumps({"chrome": chrome}), cwd=ROOT, capture_output=True,
         text=True, encoding="utf-8", check=True)
     html = json.loads(proc.stdout)
-    pdf_path = ROOT / "output/pdf" / config["outputName"]
+    pdf_path = ROOT / "output/pdf/category-theory-illustrated-vi-frontmatter-book.pdf"
     pdf = pdf_checks("book", html, report, profiles, pdf_path=pdf_path, cache_name="vi-frontmatter-book")
     reader = PdfReader(pdf_path)
     language = str(reader.trailer["/Root"].get("/Lang", ""))

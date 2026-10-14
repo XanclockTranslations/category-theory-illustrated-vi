@@ -29,15 +29,16 @@ def font(size, bold=False):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--vi-frontmatter", action="store_true")
+    parser.add_argument("--vi", action="store_true")
     args = parser.parse_args()
     pdf_path = PDF
     review_path = REVIEW
     report_name = "build-report-fuller-book.json"
-    if args.vi_frontmatter:
+    if args.vi or args.vi_frontmatter:
         config = json.loads((ROOT / "translations/vi/frontmatter.json").read_text("utf-8"))
-        pdf_path = ROOT / "output/pdf" / config["outputName"]
-        review_path = ROOT / "review/vi-frontmatter/book-layout"
-        report_name = "build-report-vi-frontmatter-book.json"
+        pdf_path = ROOT / "output/pdf" / ("category-theory-illustrated-vi-frontmatter-book.pdf" if args.vi_frontmatter else config["outputName"])
+        review_path = ROOT / ("review/vi-frontmatter/book-layout" if args.vi_frontmatter else "review/vi/book-layout")
+        report_name = "build-report-vi-frontmatter-book.json" if args.vi_frontmatter else "build-report-vi-book.json"
     sha = hashlib.sha256(pdf_path.read_bytes()).hexdigest()
     report = json.loads((ROOT / "output" / report_name).read_text(encoding="utf-8"))
     if report["pdfSha256"] != sha:

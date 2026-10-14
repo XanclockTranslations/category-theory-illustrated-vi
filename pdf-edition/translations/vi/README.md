@@ -1,38 +1,42 @@
-# Bản dịch tiếng Việt: phần mở đầu
+# Bản dịch máy tiếng Việt
 
 Nhánh `vietnamese-translation` bắt đầu từ `english-format-fork` tại commit
 `2cc1144c92ca1dfb841039308f57e49754b052ba`. Bản nguồn của tác giả được giữ ở
 `9ea2ea38052e82176cccb25c4e75709dbb064d0d`.
 
-Lần duyệt đầu tiên chỉ gồm bìa, thông tin ấn bản, danh sách chương, mục lục và
-toàn bộ phần Giới thiệu: lời tưởng niệm, câu đề từ, các mục dẫn nhập và lời cảm
-ơn. Không dịch nội dung Chương 1 (Tập hợp) hoặc các chương sau trong lần này.
-Toàn bộ công việc của lần duyệt này nằm trong một commit.
+AI được sử dụng: **GPT-6.1 Sol (Ultra)**. Người thực hiện prompting:
+**Bế Trọng Nghĩa @ichxorya**.
 
-**Trạng thái: chờ người dùng duyệt. Không bắt đầu Chương 1 cho đến khi người
-dùng cho phép tiếp tục.**
+Lần duyệt đầu tiên gồm bìa đến hết phần Giới thiệu, trong một commit.
+Ngày 15-10-2026, người dùng cho phép tiếp tục dịch các chương tự động.
+Mỗi chương có một commit riêng cùng ghi chú rà soát; `frontmatter.json`
+ghi các chương đã được đưa vào bản dựng. Các tệp đang dịch chưa có trong
+danh sách ấy không được đưa vào PDF.
 
 ## Dựng bản xem thử
 
 Từ thư mục `pdf-edition`, sau khi cài các phụ thuộc theo README chính:
 
 ```bash
-pnpm build:vi:frontmatter
-python tools/audit_vi_frontmatter.py
-python tools/review_book.py --vi-frontmatter
+pnpm build:vi
+python tools/audit_vi.py
+python tools/review_book.py --vi
 ```
 
-Kết quả: `output/pdf/category-theory-illustrated-vi-frontmatter-book.pdf`.
+Kết quả: `output/pdf/category-theory-illustrated-vi-book.pdf`.
 Bản xem thử dùng cùng bố cục Book 178 × 241 mm và cỡ chữ thân bài 11,5 pt.
 Mục lục dịch cả các đề mục của chương chưa dịch, nhưng không tạo liên kết đến
-những trang chưa có. Dấu `-` thay cho số trang chưa xác định. Mục Giới thiệu có
-số trang, liên kết và dấu trang PDF thực tế.
+những trang chưa có. Dấu `-` thay cho số trang chưa xác định. Các phần đã có
+trong bản dựng có số trang, liên kết và dấu trang PDF thực tế.
+
+`node tools/build.mjs --vi --through N` dựng đến hết Chương N (0 là Giới thiệu).
+`pnpm build:vi:frontmatter` vẫn dựng riêng phần mở đầu để so sánh.
 
 Nếu sửa chữ hoặc vị trí chữ trên bìa, hãy dựng lại SVG trước:
 
 ```bash
 python tools/prepare_cover.py --labels assets/cover/labels.vi.json
-pnpm build:vi:frontmatter
+pnpm build:vi
 ```
 
 Bìa giữ hình minh hoạ gốc, dùng lớp chữ Unicode có thể chỉnh sửa và nhúng các

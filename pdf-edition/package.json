@@ -6,6 +6,8 @@
   "type": "module",
   "scripts": {
     "build": "node tools/build.mjs",
+    "build:vi": "node tools/build.mjs --vi",
+    "audit:vi": "python tools/audit_vi.py",
     "build:vi:frontmatter": "node tools/build.mjs --vi-frontmatter",
     "audit": "python tools/audit_fuller.py",
     "review": "python tools/review_book.py",

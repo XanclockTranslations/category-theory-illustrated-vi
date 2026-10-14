@@ -64,12 +64,13 @@ Acceptance updates the source lock after checking the working inputs against the
 ## Repository hygiene and translation
 
 The `vietnamese-translation` branch starts from `english-format-fork`. Its
-first review commit translates only the cover and everything before Chapter 1
-(Sets). Run `pnpm build:vi:frontmatter` and `python tools/audit_vi_frontmatter.py`;
-see [the Vietnamese review guide](translations/vi/README.md). Chapter 1 must
-wait for the user's review and authorization to continue. The ordinary
+first review commit translated the cover and everything before Chapter 1.
+The user authorized automatic chapter continuation on 15 October 2026.
+Run `pnpm build:vi`, `python tools/audit_vi.py`, and
+`python tools/review_book.py --vi`; see [the Vietnamese review guide](translations/vi/README.md).
+The ordinary
 `pnpm build` command remains the full English build.
 
 Editable tools, styles, cover assets, configuration, lockfiles, and documentation are publishable. `node_modules/`, `output/`, `review/`, `tmp/`, caches, machine-specific environment files, and `archive/` are ignored. Historical local outputs and unused comparison tools were moved into `archive/previous-editions/`. The upstream research files and original exports retain their original locations and history.
 
-Vietnamese chapter sources, a terminology glossary, and translated SVG labels should later live in separate language directories and use the same renderer. Translate editable sources instead of extracting the PDF text. Keep the relationship between each translation passage and its accepted English source so upstream changes can be reviewed.
+Vietnamese chapter sources and terminology live in `translations/vi/` and use the same renderer. The manifest admits only a consecutive prefix of the locked English source; unfinished files are excluded. `node tools/build.mjs --vi --through N` builds a completed prefix (0 = Introduction, 1 = Sets, through 8 = Natural transformations). Translate editable sources instead of extracting PDF text; keep their relationship to the accepted English source for upstream review.
