@@ -1,0 +1,35 @@
+# Reproducible local dependencies and generated publication artifacts.
+/node_modules/
+/output/
+/review/
+/tmp/
+/archive/
+/.cache/
+/.pnpm-store/
+/.venv/
+
+# Python and browser audit caches/reports.
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+/playwright-report/
+/test-results/
+
+# Local logs and machine-specific environment settings.
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.env
+.env.*
+!.env.example
+!.env.sample
+
+# Desktop/editor litter.
+.DS_Store
+Thumbs.db
+*.tmp
+/assets/cover/preview-*.png

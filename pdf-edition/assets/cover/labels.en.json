@@ -1,0 +1,39 @@
+{
+  "language": "en",
+  "renderMode": "original-outlines",
+  "viewBox": "0 0 210 297",
+  "labels": {
+    "titleLine1": {
+      "text": "Category Theory",
+      "x": 102.4393667,
+      "y": 136.65436,
+      "fontFamily": "Noto Sans, sans-serif",
+      "fontSize": 16.0618,
+      "fontWeight": 300,
+      "textLength": 129.54747,
+      "fill": "#666666"
+    },
+    "titleLine2": {
+      "text": "Illustrated",
+      "x": 102.0221267,
+      "y": 159.95206,
+      "fontFamily": "Noto Sans Mono, monospace",
+      "fontSize": 22.2984,
+      "fontWeight": 400,
+      "textLength": 131.09207,
+      "fill": "#ffffff"
+    },
+    "author": {
+      "text": "Jencel P.",
+      "x": 104.8902,
+      "y": 258.2174,
+      "fontFamily": "Noto Sans Mono, monospace",
+      "fontSize": 13.509,
+      "fontWeight": 700,
+      "fontStyle": "italic",
+      "textLength": 65.29376,
+      "transform": "rotate(0.27741161)",
+      "fill": "#666666"
+    }
+  }
+}

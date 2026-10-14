@@ -1,0 +1,32 @@
+{
+  "title": "Category Theory Illustrated",
+  "author": "Jencel Panic",
+  "language": "en",
+  "editionLabel": "Independently typeset fuller edition",
+  "sourceUrl": "https://abuseofnotation.github.io/category-theory-illustrated/",
+  "repositoryUrl": "https://github.com/abuseofnotation/category-theory-illustrated",
+  "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+  "licenseIdentifier": "CC BY-NC-SA 4.0",
+  "originalLicenseNotice": "Creative Commons Non-Commercial Share Alike 4.0",
+  "referenceEpubFile": "Panic, Jencel/Category Theory Illustrated/Category Theory Illustrated - Jencel Panic.epub",
+  "upstreamRef": "9ea2ea38052e82176cccb25c4e75709dbb064d0d",
+  "distribution": "fuller",
+  "chapterFiles": [
+    "_chapters/00_about.md",
+    "_chapters/01_set.md",
+    "_chapters/02_category.md",
+    "_chapters/03_monoid.md",
+    "_chapters/04_order.md",
+    "_chapters/05_logic.md",
+    "_chapters/06_type.md",
+    "_chapters/10_functors.md",
+    "_chapters/11_natural_transformations.md"
+  ],
+  "sourceNoticeFiles": [
+    "_layouts/default.html",
+    "_config.yml",
+    "epub/title.txt",
+    "cover_print.svg"
+  ],
+  "outputName": "category-theory-illustrated-en-fuller-book.pdf"
+}

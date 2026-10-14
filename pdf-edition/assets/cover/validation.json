@@ -1,0 +1,29 @@
+{
+  "reference": "Browser rendering of upstream cover_print.svg at 794 by 1123 pixels",
+  "candidate": "Browser rendering of cover.en.svg at the same dimensions",
+  "renderEngine": "Chromium",
+  "pixelSize": [
+    794,
+    1123
+  ],
+  "meanChannelDifference": 0.15769278792487137,
+  "pixelsWithAnyDifference": 21873,
+  "pixelsDifferenceOver16": 3100,
+  "totalPixels": 891662,
+  "nativeSvgImageElementCount": 0,
+  "nativeSvgPathCount": 612,
+  "uniqueIds": 2322,
+  "editableHiddenLabels": [
+    "Category Theory",
+    "Illustrated",
+    "Jencel P."
+  ],
+  "visualResult": "All edge circles/connecting lines, collage diagrams, original English outlined title, author and original background visually matched. Small pixel differences arise from native-vector versus embedded-SVG rendering.",
+  "checksPassed": [
+    "SVG image wrappers flattened into native SVG",
+    "Intrinsic coordinates retained when source viewBox was absent",
+    "No duplicate SVG IDs",
+    "Three live Unicode text objects available for localization",
+    "Original English outlined lettering active"
+  ]
+}

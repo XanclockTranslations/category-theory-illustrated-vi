@@ -1,0 +1,20 @@
+{
+  "book": {
+    "label": "Book layout",
+    "widthMm": 178,
+    "heightMm": 241,
+    "marginTopMm": 17,
+    "marginBottomMm": 18,
+    "marginLeftMm": 18,
+    "marginRightMm": 18,
+    "bodySizePt": 11.5,
+    "bodyFont": "Noto Serif",
+    "bodyLineHeight": 1.47,
+    "captionSizePt": 8.5,
+    "heading1Pt": 25,
+    "heading2Pt": 16,
+    "heading3Pt": 12.5,
+    "diagramMaxHeightMm": 112,
+    "tocSizePt": 9.5
+  }
+}
