@@ -17,7 +17,8 @@ const expected = report.chapters.map(c=>{
  const images=t=>[...t.matchAll(/!\[([\s\S]*?)\]\(([^)]+)\)/g)].map(m=>({file:'_chapters/'+m[2].replace(/^\.\.\//,''),caption:m[1]}));
  const prose=t=>{
   const codes=[];
-  return t.replace(/```[^\n]*\n[\s\S]*?```/g,m=>{codes.push(m);return `AUDITCODE${codes.length-1}END`;}).replace(/!\[[\s\S]*?\]\([^)]*\)/g,' ').replace(/\$\$[\s\S]*?\$\$|\$[^$\n]*?\$/g,' ').replace(/^[ \t]*\{:\s*\.?[\w-]+\s*\}[ \t]*\n/gm,'').replace(/AUDITCODE(\d+)END/g,(_,i)=>codes[Number(i)]);
+  let mathIndex=0;
+  return t.replace(/```[^\n]*\n[\s\S]*?```|`[^`]*`/g,m=>{codes.push(m);return `AUDITCODE${codes.length-1}END`;}).replace(/!\[[\s\S]*?\]\([^)]*\)/g,' ').replace(/\$\$[\s\S]*?\$\$|\$[^$\n]*?\$/g,()=>`AUDITMATH${mathIndex++}END`).replace(/^[ \t]*\{:\s*\.?[\w-]+\s*\}[ \t]*\n/gm,'').replace(/AUDITCODE(\d+)END/g,(_,i)=>codes[Number(i)]);
  };
  const blocks=t=>md.parse(t,{}).map(x=>x.type);
  return {file:c.file,html:md.render(prose(translated)),images:images(translated),formulas:math(translated.replace(/!\[[\s\S]*?\]\([^)]*\)/g,'')).map(x=>({display:x.startsWith('$$'),tex:x.slice(x.startsWith('$$')?2:1,x.startsWith('$$')?-2:-1)})),
@@ -36,7 +37,7 @@ try{
    const imgs=[...original.querySelectorAll('figure')].map(x=>({file:x.dataset.source,caption:x.querySelector('svg').getAttribute('aria-label')}));
    const formulas=[...original.querySelectorAll('.math')].filter(x=>!x.closest('figcaption')).map(x=>({display:x.classList.contains('display-math'),tex:norm(x.textContent.slice(2,-2))}));
    actual.querySelectorAll('figure,.math,.chapter-navigation').forEach(x=>x.replaceWith(document.createTextNode(' ')));
-   const a=norm(actual.textContent),b=norm(exp.textContent);let at=0;while(at<a.length&&a[at]===b[at])at++;
+   const a=norm(actual.textContent),b=norm(exp.textContent.replace(/AUDITMATH\d+END/g,' '));let at=0;while(at<a.length&&a[at]===b[at])at++;
    return {file:e.file,invariants:e.invariants,proseMatch:a===b,mismatch:a===b?null:{at,expected:b.slice(at-60,at+160),actual:a.slice(at-60,at+160)},imageSequence:eq(imgs,e.images.map(x=>({...x,caption:norm(x.caption)}))),formulaSequence:eq(formulas,e.formulas.map(x=>({...x,tex:norm(x.tex)}))),codeMatch:eq([...actual.querySelectorAll('pre')].map(x=>x.textContent),[...exp.querySelectorAll('pre')].map(x=>x.textContent)),captionCount:imgs.length};
   });
   const toc=[...document.querySelectorAll('.contents a .toc-page')].map(x=>({id:x.dataset.target,page:Number(x.textContent)}));

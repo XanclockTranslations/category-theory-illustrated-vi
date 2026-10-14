@@ -8,9 +8,13 @@ export function localizeDiagrams(labels) {
     const bounds = {left:view.x,top:view.y,right:view.x+(view.width || svg.width.baseVal.value),bottom:view.y+(view.height || svg.height.baseVal.value)};
     for (const label of selected) {
       const id = `${figure.id}-${label.id}`;
-      const original = document.getElementById(id);
+      let original = document.getElementById(id);
       if (!original || (original.getAttribute('aria-label') ?? original.textContent).replace(/\s+/g,' ').trim() !== label.source)
         throw new Error(`Missing or stale diagram label: ${id}`);
+      if (original.tagName.toLowerCase() === 'tspan') {
+        if (original.parentElement.textContent.trim() !== label.source) throw new Error(`Mixed live text label: ${id}`);
+        original = original.parentElement;
+      }
       const box = original.getBBox();
       if (!box.width || !box.height) throw new Error(`Empty diagram label: ${id}`);
       const style = getComputedStyle(original);
