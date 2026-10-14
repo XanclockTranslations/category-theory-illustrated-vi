@@ -9,7 +9,8 @@
   "chapterSources": {
     "_chapters/00_about.md": "translations/vi/00_about.md",
     "_chapters/01_set.md": "translations/vi/01_set.md",
-    "_chapters/02_category.md": "translations/vi/02_category.md"
+    "_chapters/02_category.md": "translations/vi/02_category.md",
+    "_chapters/03_monoid.md": "translations/vi/03_monoid.md"
   },
   "publicationFile": "translations/vi/publication.md",
   "contentsFile": "translations/vi/toc.json",
