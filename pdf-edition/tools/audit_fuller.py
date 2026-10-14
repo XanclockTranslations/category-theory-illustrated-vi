@@ -103,8 +103,8 @@ def epub_payload(config):
     return chapters, {"path": str(ref), "sha256": hashlib.sha256(ref.read_bytes()).hexdigest()}
 
 
-def pdf_checks(profile, html_result, report, profiles):
-    path = ROOT / "output/pdf" / f"category-theory-illustrated-en-fuller-{profile}.pdf"
+def pdf_checks(profile, html_result, report, profiles, pdf_path=None, cache_name=None):
+    path = Path(pdf_path) if pdf_path is not None else ROOT / "output/pdf" / f"category-theory-illustrated-en-fuller-{profile}.pdf"
     sha = hashlib.sha256(path.read_bytes()).hexdigest()
     reader = PdfReader(path)
     outlines = []
@@ -144,7 +144,7 @@ def pdf_checks(profile, html_result, report, profiles):
                 target = action.get("/D")
             if isinstance(target, str) and str(target).lstrip("/") not in named:
                 link_bad.append({"page": page_number, "target": str(target)})
-    cache = REVIEW / f"full-content-audit-geometry-{profile}.json"
+    cache = REVIEW / f"full-content-audit-geometry-{cache_name or profile}.json"
     geometry = json.loads(cache.read_text("utf-8")) if cache.exists() else {}
     if geometry.get("pdfSha256") != sha:
         off_page, bounds, low_text = [], [], []

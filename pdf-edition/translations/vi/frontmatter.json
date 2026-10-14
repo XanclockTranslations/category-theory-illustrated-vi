@@ -1,0 +1,27 @@
+{
+  "sourceRevision": "9ea2ea38052e82176cccb25c4e75709dbb064d0d",
+  "translationBase": "2cc1144c92ca1dfb841039308f57e49754b052ba",
+  "language": "vi",
+  "title": "Lý thuyết phạm trù minh hoạ",
+  "editionLabel": "Bản dịch tiếng Việt - Phần mở đầu",
+  "status": "awaiting-user-review",
+  "stopBefore": "_chapters/01_set.md",
+  "chapterSources": { "_chapters/00_about.md": "translations/vi/00_about.md" },
+  "publicationFile": "translations/vi/publication.md",
+  "contentsFile": "translations/vi/toc.json",
+  "coverMetadata": "assets/cover/provenance.vi.json",
+  "outputName": "category-theory-illustrated-vi-frontmatter-book.pdf",
+  "ui": {
+    "overviewHeading": "Các chương trong sách",
+    "overviewLabel": "Danh sách chương",
+    "overviewInstruction": "Mục lục chi tiết ở các trang tiếp theo liệt kê các chủ đề, các phần đọc thêm và lời giải bài tập. Phần Giới thiệu đã có liên kết và số trang; các chương tiếp theo sẽ được bổ sung sau khi bản dịch phần mở đầu được duyệt.",
+    "contentsHeading": "Mục lục",
+    "contentsLabel": "Mục lục chi tiết",
+    "contentsNotice": "Bản xem thử này dừng ở cuối phần Giới thiệu, trước Chương 1. Dấu - cho biết số trang tiếng Việt chưa được xác định. Các đề mục của chương chưa dịch được liệt kê để bạn xem trước cấu trúc cuốn sách.",
+    "navigationLabel": "Điều hướng",
+    "contentsLink": "Mục lục",
+    "coverAlt": "Lý thuyết phạm trù minh hoạ, của Jencel Panic",
+    "runningHeader": "LÝ THUYẾT PHẠM TRÙ - MINH HOẠ",
+    "pdfSubject": "Bản dịch tiếng Việt: từ bìa đến hết phần Giới thiệu"
+  }
+}

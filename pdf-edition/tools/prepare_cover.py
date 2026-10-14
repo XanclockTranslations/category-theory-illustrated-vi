@@ -2,7 +2,8 @@
 
 The English cover keeps the exact original outlined lettering. The labels JSON
 also defines a live text layer: change renderMode to "text" and edit its labels
-for a later localized edition. No font files or raster illustrations are copied.
+for a localized edition. Local Noto fonts may be embedded for portable Unicode
+lettering; the illustration artwork always remains native vector geometry.
 """
 
 from __future__ import annotations
@@ -155,6 +156,43 @@ def save_svg(path: Path, root: ET.Element) -> None:
     ET.ElementTree(root).write(path, encoding="utf-8", xml_declaration=True)
 
 
+def embed_fonts(root: ET.Element, labels: dict) -> None:
+    """Embed requested local font subsets without changing the editable text."""
+    css_parts, files, licenses = [], {}, {}
+    for face in labels.get("fontFaces", []):
+        package = face["package"]
+        if package not in {"noto-sans", "noto-serif"}:
+            raise ValueError(f"Unsupported cover font package: {package}")
+        weight, style = int(face["weight"]), face.get("style", "normal")
+        if weight not in range(100, 901, 100) or style not in {"normal", "italic"}:
+            raise ValueError("Invalid cover font weight/style.")
+        folder = EDITION / "node_modules" / "@fontsource" / package
+        css_path = folder / f"{weight}{'-italic' if style == 'italic' else ''}.css"
+        css = css_path.read_text(encoding="utf-8")
+        licenses[package] = (folder / "LICENSE").read_text(encoding="utf-8")
+        for comment, block in re.findall(r"(/\*[^*]+\*/\s*)(@font-face\s*\{[^}]+\})", css):
+            if not any(f"-{subset}-{weight}-" in comment for subset in ("latin", "latin-ext", "vietnamese")):
+                continue
+            match = re.search(r"url\(([^)]+\.woff2)\)", block)
+            if not match:
+                raise ValueError(f"Missing WOFF2 source in {css_path.name}")
+            font_path = (folder / match[1]).resolve()
+            if not font_path.is_relative_to(folder.resolve()):
+                raise ValueError("Cover font path escapes its local package.")
+            data = font_path.read_bytes()
+            relative = font_path.relative_to(EDITION).as_posix()
+            files[relative] = hashlib.sha256(data).hexdigest()
+            src = "src: url(data:font/woff2;base64," + base64.b64encode(data).decode("ascii") + ") format('woff2');"
+            css_parts.append(re.sub(r"src:[^;]+;", lambda _: src, block).replace("font-display: swap;", "font-display: block;"))
+    if css_parts:
+        style_element = ET.Element(TAG("style"), {"id": "cover-embedded-fonts", "type": "text/css"})
+        style_element.text = "\n".join(css_parts)
+        metadata = ET.Element(TAG("metadata"), {"id": "cover-font-provenance"})
+        metadata.text = json.dumps({"files": files, "licenses": licenses}, ensure_ascii=False)
+        root.insert(2, style_element)
+        root.insert(3, metadata)
+
+
 def build_cover_tree(labels: dict) -> tuple[ET.Element, list[dict]]:
     """Compose a cover in memory, allowing localization checks without writes."""
     source = REPO / "cover_print.svg"
@@ -176,7 +214,7 @@ def build_cover_tree(labels: dict) -> tuple[ET.Element, list[dict]]:
     title = ET.Element(TAG("title"), {"id": "cover-accessible-title"})
     title.text = labels["labels"]["titleLine1"]["text"] + " — " + labels["labels"]["titleLine2"]["text"]
     description = ET.Element(TAG("desc"), {"id": "cover-accessible-description"})
-    description.text = "Original cover artwork by Jencel Panic, adapted as native SVG with a separate localizable title and author layer."
+    description.text = labels.get("description", "Original cover artwork by Jencel Panic, adapted as native SVG with a separate localizable title and author layer.")
     root.insert(0, description)
     root.insert(0, title)
     for element in root.iter():
@@ -187,6 +225,7 @@ def build_cover_tree(labels: dict) -> tuple[ET.Element, list[dict]]:
             if labels["renderMode"] == "text":
                 element.set("style", element.get("style", "") + ";display:none")
     root.append(text_layer(labels, labels["renderMode"] == "text"))
+    embed_fonts(root, labels)
     if list(root.iter(TAG("image"))):
         raise ValueError("Cover still contains an image element after vector flattening.")
     ids = [element.get("id") for element in root.iter() if element.get("id")]
@@ -201,11 +240,21 @@ def prepare(labels_path: Path, output: Path | None = None) -> dict:
     root, records = build_cover_tree(labels)
     target = output or ASSETS / f"cover.{labels.get('language', 'en')}.svg"
     save_svg(target, root)
-    art = copy.deepcopy(root)
-    remove_elements(art, set(OUTLINE_IDS) | {"cover-localizable-labels", "cover-accessible-title"})
-    art.set("id", "category-theory-illustrated-cover-art")
-    art.set("aria-labelledby", "cover-accessible-description")
-    save_svg(ASSETS / "cover-art.svg", art)
+    language = labels.get("language", "en")
+    if language == "en":
+        art = copy.deepcopy(root)
+        remove_elements(art, set(OUTLINE_IDS) | {"cover-localizable-labels", "cover-accessible-title"})
+        art.set("id", "category-theory-illustrated-cover-art")
+        art.set("aria-labelledby", "cover-accessible-description")
+        save_svg(ASSETS / "cover-art.svg", art)
+    elif not (ASSETS / "cover-art.svg").exists():
+        raise ValueError("Prepare the shared English artwork before a localized cover.")
+    font_metadata = root.find(TAG("metadata") + "[@id='cover-font-provenance']")
+    fonts = json.loads(font_metadata.text) if font_metadata is not None else {"files": {}, "licenses": {}}
+    for package, notice in fonts["licenses"].items():
+        license_path = ASSETS / "licenses" / f"{package}-OFL.txt"
+        license_path.parent.mkdir(parents=True, exist_ok=True)
+        license_path.write_text(notice, encoding="utf-8", newline="\n")
     provenance = {
         "source": "cover_print.svg", "sourceSha256": sha256(source),
         "sourceCanonicalSha256": canonical_text_sha256(source),
@@ -221,17 +270,21 @@ def prepare(labels_path: Path, output: Path | None = None) -> dict:
         "nativePathCount": sum(element.tag == TAG("path") for element in root.iter()),
         "outlinedLabelIds": OUTLINE_IDS,
         "liveTextLayerId": "cover-localizable-labels", "labelsFile": labels_path.name,
+        "labelsCanonicalSha256": canonical_text_sha256(labels_path),
+        "embeddedFontFiles": fonts["files"],
+        "fontLicenseFiles": [f"licenses/{package}-OFL.txt" for package in fonts["licenses"]],
         "diagrams": records,
         "notes": [
-            "Collage positions, scaling, rotations, SVG viewBoxes, colors, background and outlined English lettering retained.",
+            "Collage positions, scaling, rotations, SVG viewBoxes, colors and background retained; English outlines are retained in the SVG but hidden in text mode.",
             "Only embedded SVG image wrappers were replaced by native nested SVG viewports with prefixed IDs.",
             "Eight embedded SVGs without viewBoxes receive explicit viewBoxes matching their original intrinsic dimensions before scaling.",
             "No Mell fonts bundled; original English visible lettering is vector paths.",
-            "The hidden editable text layer is activated by renderMode=text for localized covers.",
+            "The editable Unicode text layer is activated by renderMode=text for localized covers.",
             "Canonical text hashes use UTF-8 with LF newlines; raw hashes are retained only for exact local provenance.",
         ],
     }
-    (ASSETS / "provenance.json").write_text(json.dumps(provenance, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    provenance_name = "provenance.json" if language == "en" else f"provenance.{language}.json"
+    (ASSETS / provenance_name).write_text(json.dumps(provenance, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(json.dumps({key: provenance[key] for key in ("output", "embeddedVectorDiagramsFlattened", "rasterImages", "nativePathCount", "renderMode")}), flush=True)
     return provenance
 

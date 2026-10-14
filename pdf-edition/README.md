@@ -63,6 +63,13 @@ Acceptance updates the source lock after checking the working inputs against the
 
 ## Repository hygiene and translation
 
+The `vietnamese-translation` branch starts from `english-format-fork`. Its
+first review commit translates only the cover and everything before Chapter 1
+(Sets). Run `pnpm build:vi:frontmatter` and `python tools/audit_vi_frontmatter.py`;
+see [the Vietnamese review guide](translations/vi/README.md). Chapter 1 must
+wait for the user's review and authorization to continue. The ordinary
+`pnpm build` command remains the full English build.
+
 Editable tools, styles, cover assets, configuration, lockfiles, and documentation are publishable. `node_modules/`, `output/`, `review/`, `tmp/`, caches, machine-specific environment files, and `archive/` are ignored. Historical local outputs and unused comparison tools were moved into `archive/previous-editions/`. The upstream research files and original exports retain their original locations and history.
 
 Vietnamese chapter sources, a terminology glossary, and translated SVG labels should later live in separate language directories and use the same renderer. Translate editable sources instead of extracting the PDF text. Keep the relationship between each translation passage and its accepted English source so upstream changes can be reviewed.

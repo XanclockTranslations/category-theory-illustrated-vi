@@ -6,6 +6,7 @@ Requires Pillow, pypdf, and Poppler's pdftoppm.
 from __future__ import annotations
 
 import hashlib
+import argparse
 import json
 import shutil
 import subprocess
@@ -26,13 +27,24 @@ def font(size, bold=False):
 
 
 def main():
-    sha = hashlib.sha256(PDF.read_bytes()).hexdigest()
-    report = json.loads((ROOT / "output/build-report-fuller-book.json").read_text(encoding="utf-8"))
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--vi-frontmatter", action="store_true")
+    args = parser.parse_args()
+    pdf_path = PDF
+    review_path = REVIEW
+    report_name = "build-report-fuller-book.json"
+    if args.vi_frontmatter:
+        config = json.loads((ROOT / "translations/vi/frontmatter.json").read_text("utf-8"))
+        pdf_path = ROOT / "output/pdf" / config["outputName"]
+        review_path = ROOT / "review/vi-frontmatter/book-layout"
+        report_name = "build-report-vi-frontmatter-book.json"
+    sha = hashlib.sha256(pdf_path.read_bytes()).hexdigest()
+    report = json.loads((ROOT / "output" / report_name).read_text(encoding="utf-8"))
     if report["pdfSha256"] != sha:
         raise ValueError("The PDF does not match its build report. Rebuild before review.")
-    reader = PdfReader(PDF)
+    reader = PdfReader(pdf_path)
     count = len(reader.pages)
-    cache = REVIEW / (sha[:16] + "-v1")
+    cache = review_path / (sha[:16] + "-v1")
     pages = cache / "pages-50dpi"
     contacts = cache / "contact-sheets"
     samples = cache / "samples-120dpi"
@@ -47,7 +59,7 @@ def main():
     images = sorted(pages.glob("page-*.png"))
     if len(images) != count:
         print(f"Rendering {count} book pages at 50 DPI...", flush=True)
-        subprocess.run([executable, "-r", "50", "-png", str(PDF), str(pages / "page")], check=True)
+        subprocess.run([executable, "-r", "50", "-png", str(pdf_path), str(pages / "page")], check=True)
         images = sorted(pages.glob("page-*.png"))
     if len(images) != count:
         raise RuntimeError("Rendered page count differs from the PDF.")
@@ -71,9 +83,9 @@ def main():
     for number in sorted({1, 2, report["contentsPages"][report["headings"][0]["id"]], count}):
         target = samples / f"page-{number:03d}.png"
         if not target.exists():
-            subprocess.run([executable, "-f", str(number), "-l", str(number), "-r", "120", "-png", "-singlefile", str(PDF), str(target.with_suffix(""))], check=True)
-    manifest = {"pdf": str(PDF), "pdfSha256": sha, "pageCount": count, "rasterDirectory": str(pages), "contactSheets": sheets, "sampleDirectory": str(samples)}
-    (REVIEW / "render-manifest.json").write_text(json.dumps(manifest, indent=2)+"\n", encoding="utf-8")
+            subprocess.run([executable, "-f", str(number), "-l", str(number), "-r", "120", "-png", "-singlefile", str(pdf_path), str(target.with_suffix(""))], check=True)
+    manifest = {"pdf": str(pdf_path), "pdfSha256": sha, "pageCount": count, "rasterDirectory": str(pages), "contactSheets": sheets, "sampleDirectory": str(samples)}
+    (review_path / "render-manifest.json").write_text(json.dumps(manifest, indent=2)+"\n", encoding="utf-8")
     print(f"Ready: {count} page rasters and {len(sheets)} contact sheets. Samples: {samples}", flush=True)
 
 

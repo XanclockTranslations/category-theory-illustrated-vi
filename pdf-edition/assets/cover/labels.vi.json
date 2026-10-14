@@ -1,0 +1,29 @@
+{
+  "language": "vi",
+  "renderMode": "text",
+  "viewBox": "0 0 210 297",
+  "description": "Tranh bìa của Jencel Panic, được chuyển thể với tiêu đề tiếng Việt có thể chỉnh sửa.",
+  "fontFaces": [
+    { "package": "noto-sans", "weight": 300, "style": "normal" },
+    { "package": "noto-serif", "weight": 700, "style": "normal" },
+    { "package": "noto-serif", "weight": 700, "style": "italic" }
+  ],
+  "labels": {
+    "titleLine1": {
+      "text": "Lý thuyết phạm trù", "x": 102.4393667, "y": 136.65436,
+      "fontFamily": "Noto Sans, sans-serif", "fontSize": 16.0618,
+      "fontWeight": 300, "textLength": 129.54747, "fill": "#666666"
+    },
+    "titleLine2": {
+      "text": "Minh hoạ", "x": 102.0221267, "y": 156.3,
+      "fontFamily": "Noto Serif, serif", "fontSize": 19.5,
+      "fontWeight": 700, "textLength": 106, "fill": "#ffffff"
+    },
+    "author": {
+      "text": "Jencel P.", "x": 104.8902, "y": 258.2174,
+      "fontFamily": "Noto Serif, serif", "fontSize": 13.509,
+      "fontWeight": 700, "fontStyle": "italic", "textLength": 65.29376,
+      "transform": "rotate(0.27741161)", "fill": "#666666"
+    }
+  }
+}

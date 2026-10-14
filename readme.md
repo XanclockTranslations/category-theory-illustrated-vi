@@ -29,6 +29,18 @@ git switch -c vietnamese-translation
 
 Keep the author's repository as `upstream` and this personal fork as `origin`. Do not merge our layout changes into `main` merely to start a translation branch.
 
+## Vietnamese frontmatter review
+
+The `vietnamese-translation` branch contains the first Vietnamese review pass:
+the cover, edition notice, chapter overview, complete contents labels, and the
+Introduction through its acknowledgments. Chapter 1 (Sets) has not been
+translated. This pass is one commit and waits for the user's content review
+before work can continue.
+
+Run `pnpm --dir pdf-edition build:vi:frontmatter` for the 16-page Book preview.
+See [the Vietnamese review guide](pdf-edition/translations/vi/README.md) and
+[translation review notes](pdf-edition/translations/vi/review-notes.md).
+
 ## Build the English book
 
 ```bash
