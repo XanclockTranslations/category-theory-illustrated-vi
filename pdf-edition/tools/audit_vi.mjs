@@ -20,7 +20,7 @@ const expected = report.chapters.map(c=>{
   return t.replace(/```[^\n]*\n[\s\S]*?```/g,m=>{codes.push(m);return `AUDITCODE${codes.length-1}END`;}).replace(/!\[[\s\S]*?\]\([^)]*\)/g,' ').replace(/\$\$[\s\S]*?\$\$|\$[^$\n]*?\$/g,' ').replace(/^[ \t]*\{:\s*\.?[\w-]+\s*\}[ \t]*\n/gm,'').replace(/AUDITCODE(\d+)END/g,(_,i)=>codes[Number(i)]);
  };
  const blocks=t=>md.parse(t,{}).map(x=>x.type);
- return {file:c.file,html:md.render(prose(translated)),images:images(translated),formulas:math(translated).map(x=>({display:x.startsWith('$$'),tex:x.slice(x.startsWith('$$')?2:1,x.startsWith('$$')?-2:-1)})),
+ return {file:c.file,html:md.render(prose(translated)),images:images(translated),formulas:math(translated.replace(/!\[[\s\S]*?\]\([^)]*\)/g,'')).map(x=>({display:x.startsWith('$$'),tex:x.slice(x.startsWith('$$')?2:1,x.startsWith('$$')?-2:-1)})),
  invariants:{blockStructure:eq(blocks(original),blocks(translated)),headingLevels: eq(headings(original),headings(translated)),math: eq(math(original),math(translated)),images: eq(images(original).map(x=>x.file),images(translated).map(x=>x.file)),fencedCode:eq(array(original,/```[^\n]*\n[\s\S]*?```/g),array(translated,/```[^\n]*\n[\s\S]*?```/g)),inlineCode:eq(array(original.replace(/```[^\n]*\n[\s\S]*?```/g,''),/`[^`]*`/g),array(translated.replace(/```[^\n]*\n[\s\S]*?```/g,''),/`[^`]*`/g))}};
 });
 const executablePath=['C:/Program Files/Google/Chrome/Application/chrome.exe','/usr/bin/chromium'].find(p=>fs.existsSync(p));
@@ -41,7 +41,8 @@ try{
   });
   const toc=[...document.querySelectorAll('.contents a .toc-page')].map(x=>({id:x.dataset.target,page:Number(x.textContent)}));
   const pending=[...document.querySelectorAll('.contents .pending')];
-  return {chapters,headings,toc,language:document.documentElement.lang,pendingCount:pending.length,pendingValid:pending.every(x=>!x.querySelector('a')&&x.querySelector('.toc-page').textContent==='-'),contentsCount:document.querySelectorAll('.contents li').length};
+  const notice = norm(document.querySelector('.publication').textContent);
+  return {chapters,headings,toc,language:document.documentElement.lang,attributionVisible:['Bản dịch máy tiếng Việt','GPT-6.1 Sol (Ultra)','Bế Trọng Nghĩa','@ichxorya'].every(s=>notice.includes(s)),pendingCount:pending.length,pendingValid:pending.every(x=>!x.querySelector('a')&&x.querySelector('.toc-page').textContent==='-'),contentsCount:document.querySelectorAll('.contents li').length};
  },expected);
  console.log(JSON.stringify(html));
 }finally{await browser.close()}
