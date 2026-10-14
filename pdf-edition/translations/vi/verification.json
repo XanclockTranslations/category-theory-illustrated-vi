@@ -1,0 +1,44 @@
+{
+  "sourceRevision": "9ea2ea38052e82176cccb25c4e75709dbb064d0d",
+  "scope": "Introduction and all eight published fuller-source chapters",
+  "language": "vi",
+  "edition": "Bản dịch máy tiếng Việt",
+  "ai": "GPT-6.1 Sol (Ultra)",
+  "prompting": "Bế Trọng Nghĩa @ichxorya",
+  "humanReview": "pending",
+  "pdfSha256": "ffc7de0d266f287dfcf4c5b05edce67956da5d987accd07ebe3b4008ae18e03e",
+  "pageCount": 476,
+  "bodyFormulaCount": 1831,
+  "captionFormulaCount": 8,
+  "imageOccurrences": 472,
+  "uniqueImages": 446,
+  "bookmarks": 331,
+  "linkedContentsEntries": 90,
+  "pendingContentsEntries": 0,
+  "visualReview": {
+    "pdfSha256": "ffc7de0d266f287dfcf4c5b05edce67956da5d987accd07ebe3b4008ae18e03e",
+    "pagesCovered": "1–476",
+    "contactSheets": 30,
+    "focused120DpiSamples": 76,
+    "result": "No blocking clipping, overlap, glyph, diagram or pagination defects found"
+  },
+  "checks": [
+    "Locked original source hashes unchanged",
+    "All translated chapter block and heading structures match",
+    "All protected math, code and ordered image references match",
+    "Translated prose and captions transferred faithfully to HTML",
+    "All PDF bookmarks, contents destinations and internal links valid",
+    "Tagged PDF with Vietnamese language metadata",
+    "No MathJax errors, browser errors, off-page text or body-boundary flags",
+    "Two independent AI meaning reviews completed across all chapters",
+    "SVG responsive fitting repaired without editing original assets"
+  ],
+  "regression": {
+    "englishPages": 478,
+    "englishSourceFailures": 0,
+    "englishNavigationErrors": 0,
+    "englishGeometryFlags": 0,
+    "introductionOnlyPreviewPages": 16,
+    "introductionOnlyPreviewAudit": "passed"
+  }
+}

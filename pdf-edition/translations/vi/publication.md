@@ -16,6 +16,6 @@ Các thay đổi của bản chế bản gồm bố cục trang, kiểu chữ, c
 
 Văn bản dùng Noto Serif; tiêu đề và phông dự phòng trong sơ đồ dùng Noto Sans. Các phông chữ này được cấp phép theo SIL Open Font License. Công thức toán được chế bản bằng MathJax.
 
-Ngày của bản nguồn được chọn: 06-06-2026. Bản dịch được bổ sung theo từng chương. Mục lục ghi số trang và liên kết cho các phần đã có trong bản dựng; dấu - cho biết phần chưa được đưa vào bản dựng ấy. Đây là bản dịch máy đang được rà soát; ghi chú của từng chương lưu các lựa chọn thuật ngữ và những điểm cần kiểm tra trong nguyên tác.
+Ngày của bản nguồn được chọn: 06-06-2026. Bản chuyển ngữ gồm phần Giới thiệu và toàn bộ tám chương đã công bố, kể cả các phần đọc thêm, phần bổ sung, bài tập và lời giải có trong nguồn. Đây là bản dịch máy đã qua hai lượt đối chiếu AI, chưa được con người duyệt. Ghi chú riêng từng chương lưu các lựa chọn thuật ngữ và những điểm cần kiểm tra trong nguyên tác.
 
 Bạn có thể ủng hộ tác giả qua [các ấn bản chính thức](https://abuseofnotation.gumroad.com/) hoặc [Patreon](https://www.patreon.com/abuseofnotation).

@@ -1,6 +1,6 @@
 # English book build
 
-This adapter builds the maintained 178 × 241 mm book layout of Jencel Panic's **Category Theory Illustrated**. The source is reconciled with the author's fuller supplied EPUB, including additional interludes, addenda, and exercise answers. The future Vietnamese translation will use this editable pipeline.
+This adapter builds the maintained 178 × 241 mm book layout of Jencel Panic's **Category Theory Illustrated** in English and Vietnamese. The source is reconciled with the author's fuller supplied EPUB, including additional interludes, addenda, and exercise answers. All eight published chapters now have a Vietnamese machine translation in this editable pipeline.
 
 The [repository README](../readme.md) explains why this independent build exists, including GPT-6.1 Sol Ultra's initial failure to notice the author's existing PDF and EPUB. The author’s chapter Markdown and illustration files remain unchanged.
 

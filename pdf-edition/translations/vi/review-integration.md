@@ -14,13 +14,16 @@ lưu kết quả đọc đối chiếu của tác nhân khác với tác nhân d
 - Chương 4: dùng tính chia hết cho quan hệ chia hết; dùng họ cho collection,
   thống nhất với Chương 2.
 - Chương 5, dòng 118: giữ nghĩa nam giới của bachelor; dòng 807 dùng đối miền.
+  Dòng 537 thêm tên phép gặp/phép nối bên cạnh các tên toán meet/join gốc,
+  giữ nguyên mọi đoạn toán.
 - Chương 6, dòng 346: giữ nghĩa xây dựng theo cùng cách; dòng 783 dịch phần
   ngôn ngữ tự nhiên trong chú thích; dòng 1338 dùng đối tượng cuối; bảng
   dòng 1352 dùng mệnh đề cơ sở.
 - Chương 7, dòng 189: dùng họ; dòng 369 phân biệt vi tích phân và giải tích.
 - Chương 8: lượt đối chiếu độc lập không tìm ra lỗi dịch mới cần sửa.
 
-Bố cục tiếng Việt giữ đoạn dẫn cùng công thức ngay sau và giữ điều hướng
+Bố cục tiếng Việt giữ đoạn dẫn cùng công thức hoặc khung định nghĩa/định lý
+ngay sau và giữ điều hướng
 cùng nội dung cuối chương khi có thể, để giảm trang chỉ còn một công thức
 hoặc thanh điều hướng. Quy tắc này không đổi bố cục tiếng Anh.
 

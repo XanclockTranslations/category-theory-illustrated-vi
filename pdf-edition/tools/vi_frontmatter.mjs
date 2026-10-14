@@ -61,7 +61,13 @@ export function loadVietnameseFrontmatter(acceptedSource, md, lock, through = nu
     const file = `translations/vi/diagrams/${path.basename(c.file, '.md')}.json`;
     return fs.existsSync(path.join(editionDir, file)) ? JSON.parse(read(file)) : [];
   });
-  const publicationTokens = md.parse(read(config.publicationFile), {});
+  let publicationText = read(config.publicationFile);
+  if (last < acceptedSource.chapters.length - 1) {
+    const lastTitle = entries.get(outline.find(h => h.chapterIndex === last && h.level === 1).id).title;
+    publicationText = publicationText.replace('Bản chuyển ngữ gồm', 'Toàn bộ bản chuyển ngữ trong kho mã gồm');
+    publicationText += `\n\n**Phạm vi bản dựng này:** chỉ từ bìa đến hết ${last ? `Chương ${last}: ${lastTitle}` : 'phần Giới thiệu'}. Các phần chưa đưa vào bản dựng có dấu - trong mục lục, không có liên kết hay số trang giả định.\n`;
+  }
+  const publicationTokens = md.parse(publicationText, {});
   const publicationHeadings = publicationTokens.filter(token => token.type === 'heading_open');
   if (publicationHeadings.filter(t => t.tag === 'h1').length !== 1) throw new Error('The edition notice must have one main title.');
   publicationHeadings.forEach((token, i) => token.attrSet('id', i ? `edition-notice-${i}` : 'edition-notice'));

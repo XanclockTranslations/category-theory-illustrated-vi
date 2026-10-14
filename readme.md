@@ -1,6 +1,6 @@
 # Category Theory Illustrated: Vietnamese adaptation workspace
 
-This is the public adaptation fork of **Category Theory Illustrated** by **Jencel Panic**, maintained at [ichxorya/category-theory-illustrated-vi](https://github.com/ichxorya/category-theory-illustrated-vi). The current edition establishes an editable English book layout that will serve as the foundation for a Vietnamese translation.
+This is the public adaptation fork of **Category Theory Illustrated** by **Jencel Panic**, maintained at [ichxorya/category-theory-illustrated-vi](https://github.com/ichxorya/category-theory-illustrated-vi). The editable English book layout and the complete Vietnamese machine translation share the same source-driven pipeline.
 
 Read the [author's web book](https://abuseofnotation.github.io/category-theory-illustrated/) and visit the [original repository](https://github.com/abuseofnotation/category-theory-illustrated). Please support the author through the [official editions](https://abuseofnotation.gumroad.com/) or [Patreon](https://www.patreon.com/abuseofnotation).
 
@@ -35,7 +35,10 @@ The `vietnamese-translation` branch contains the Vietnamese machine translation.
 AI: **GPT-6.1 Sol (Ultra)**. Prompting: **Bế Trọng Nghĩa @ichxorya**.
 The first commit covered the cover through the Introduction. On 15 October 2026,
 the user authorized automatic continuation through the chapters, one commit per
-chapter. The translation manifest records the completed consecutive chapters.
+chapter. The Introduction and all eight published chapters are translated,
+including the fuller-source interludes, addenda, exercises and supplied answers.
+Each chapter has review notes and a second AI meaning review; human review is pending.
+The translation manifest records the completed consecutive chapters.
 
 Run `pnpm --dir pdf-edition build:vi` for the current Vietnamese Book edition.
 Use `build:vi:frontmatter` to reproduce an introduction-only preview.

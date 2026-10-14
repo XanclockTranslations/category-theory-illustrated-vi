@@ -11,7 +11,29 @@ Lần duyệt đầu tiên gồm bìa đến hết phần Giới thiệu, trong 
 Ngày 15-10-2026, người dùng cho phép tiếp tục dịch các chương tự động.
 Mỗi chương có một commit riêng cùng ghi chú rà soát; `frontmatter.json`
 ghi các chương đã được đưa vào bản dựng. Các tệp đang dịch chưa có trong
-danh sách ấy không được đưa vào PDF.
+danh sách ấy không được đưa vào PDF. Hiện đã dịch phần Giới thiệu và toàn bộ
+tám chương đã công bố, gồm phần đọc thêm, phần bổ sung, bài tập và lời giải
+có trong nguồn. Hai lượt đối chiếu AI đã hoàn tất; chưa có duyệt của con người.
+
+| Chương | Tệp bản dịch | Ghi chú |
+| --- | --- | --- |
+| Giới thiệu | `00_about.md` | `review-notes.md` |
+| 1. Tập hợp | `01_set.md` | `review-01-set.md` |
+| 2. Từ tập hợp đến phạm trù | `02_category.md` | `review-02-category.md` |
+| 3. Monoid và những cấu trúc liên quan | `03_monoid.md` | `review-03-monoid.md` |
+| 4. Thứ tự | `04_order.md` | `review-04-order.md` |
+| 5. Lôgic | `05_logic.md` | `review-05-logic.md` |
+| 6. Kiểu | `06_type.md` | `review-06-type.md` |
+| 7. Hàm tử | `10_functors.md` | `review-10-functors.md` |
+| 8. Biến đổi tự nhiên | `11_natural_transformations.md` | `review-11-natural-transformations.md` |
+
+Kết quả lượt đối chiếu thứ hai ở `independent-review.md` và
+`independent-review-03-06-08.md`; các sửa đổi được áp dụng ở
+`review-integration.md`. Ghi chú riêng chương phân biệt lỗi nguồn với lỗi dịch.
+`verification.json` lưu phạm vi và các chỉ số của bản PDF đã kiểm tra:
+476 trang, 472 lượt hình, 1.831 công thức thân bài, 8 công thức chú thích,
+331 dấu trang và đủ 90 mục lục có liên kết. Hash này nhận diện bản dựng
+được duyệt bằng AI; PDF dựng lại có thể có hash khác do siêu dữ liệu PDF.
 
 ## Dựng bản xem thử
 
@@ -49,7 +71,7 @@ nguồn gốc của bìa tiếng Anh. `pnpm build` vẫn dựng bản tiếng An
 - `00_about.md`: bản dịch đầy đủ của `_chapters/00_about.md`.
 - `publication.md`: thông tin bản dịch, nguồn, ghi công và giấy phép.
 - `toc.json`: 90 đề mục mục lục, ghép theo ID và tiêu đề tiếng Anh gốc.
-- `frontmatter.json`: phạm vi, trạng thái duyệt và các nhãn điều hướng.
+- `frontmatter.json`: manifest chung của bản tiếng Việt, phạm vi dựng, ghi công và các nhãn điều hướng (giữ tên tệp từ lần dựng phần mở đầu).
 - `review-notes.md`: lựa chọn dịch thuật và các điểm bất nhất của nguyên bản.
 
 Các chương tiếng Anh và `source-lock.json` vẫn là căn cứ đối chiếu. Bộ kiểm

@@ -62,6 +62,15 @@ md.renderer.rules.image = (tokens, index) => {
   const alt = token.content.replace(/\s+/g, ' ').trim();
   let svg = fs.readFileSync(path.join(repoDir, file), 'utf8');
   svg = svg.replace(/<\?xml[\s\S]*?\?>/g, '').replace(/<!DOCTYPE[\s\S]*?>/g, '');
+  const svgRoot = svg.match(/<svg\b[^>]*>/)?.[0];
+  if (!svgRoot) throw new Error(`Missing SVG root: ${file}`);
+  if (!/\bviewBox\s*=/.test(svgRoot)) {
+    const width = Number(svgRoot.match(/\bwidth="([0-9.]+)(?:px)?"/)?.[1]);
+    const height = Number(svgRoot.match(/\bheight="([0-9.]+)(?:px)?"/)?.[1]);
+    if (!(width > 0 && height > 0)) throw new Error(`Cannot infer the missing SVG viewBox: ${file}`);
+    svg = svg.replace(svgRoot, svgRoot.replace(/<svg\b/, `<svg viewBox="0 0 ${width} ${height}"`));
+    changes.push({file,kind:'layout',detail:'Supply the missing SVG viewBox from its original width and height so responsive fitting scales rather than crops the artwork.'});
+  }
   const number = ++renderedImageCount;
   const prefix = `figure-${number}-`;
   for (const id of [...svg.matchAll(/\bid="([^"]+)"/g)].map(m => m[1])) {

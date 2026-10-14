@@ -4,7 +4,7 @@
   "language": "vi",
   "title": "Lý thuyết phạm trù minh hoạ",
   "editionLabel": "Bản dịch máy tiếng Việt",
-  "status": "automatic-translation-in-progress",
+  "status": "machine-translation-complete-awaiting-human-review",
   "translationAttribution": { "ai": "GPT-6.1 Sol (Ultra)", "prompting": "Bế Trọng Nghĩa", "handle": "@ichxorya" },
   "chapterSources": {
     "_chapters/00_about.md": "translations/vi/00_about.md",
@@ -14,7 +14,8 @@
     "_chapters/04_order.md": "translations/vi/04_order.md",
     "_chapters/05_logic.md": "translations/vi/05_logic.md",
     "_chapters/06_type.md": "translations/vi/06_type.md",
-    "_chapters/10_functors.md": "translations/vi/10_functors.md"
+    "_chapters/10_functors.md": "translations/vi/10_functors.md",
+    "_chapters/11_natural_transformations.md": "translations/vi/11_natural_transformations.md"
   },
   "publicationFile": "translations/vi/publication.md",
   "contentsFile": "translations/vi/toc.json",

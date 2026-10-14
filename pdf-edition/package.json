@@ -2,7 +2,7 @@
   "name": "category-theory-illustrated-pdf-edition",
   "version": "0.1.0",
   "private": true,
-  "description": "An editable book layout for the fuller English source and future Vietnamese translation",
+  "description": "Editable book layouts for the fuller English source and complete Vietnamese machine translation",
   "type": "module",
   "scripts": {
     "build": "node tools/build.mjs",

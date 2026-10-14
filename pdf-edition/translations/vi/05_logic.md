@@ -534,7 +534,7 @@ Bây giờ, hãy xem xét câu hỏi đã đặt ra trước đó --- chính xá
 
 ![Phép gặp và phép nối trong thứ tự](../05_logic/lattice_meet_join.svg)
 
-Lôgic cho phép bạn kết hợp hai mệnh đề bất kỳ trong quan hệ *và* hoặc *hoặc*. Vì thế, để một thứ tự có tính "lôgic" (là một biểu diễn đúng của một hệ lôgic), *nó phải có các phép toán $meet$ và $join$ cho mọi phần tử*. Tình cờ, chúng ta đã biết những thứ tự như vậy được gọi là gì --- chúng được gọi là *dàn*.
+Lôgic cho phép bạn kết hợp hai mệnh đề bất kỳ trong quan hệ *và* hoặc *hoặc*. Vì thế, để một thứ tự có tính "lôgic" (là một biểu diễn đúng của một hệ lôgic), *nó phải có phép gặp ($meet$) và phép nối ($join$) cho mọi phần tử*. Tình cờ, chúng ta đã biết những thứ tự như vậy được gọi là gì --- chúng được gọi là *dàn*.
 
 {: .definition}
 
