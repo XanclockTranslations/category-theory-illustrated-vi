@@ -1,11 +1,15 @@
 # Bản dịch máy tiếng Việt
 
+**[Machine Translated, Not Reviewed]** — Bản dịch máy chưa được con người duyệt, có thể có lỗi về ý nghĩa, thuật ngữ hoặc nội dung toán học.
+
+Kho bản dịch: [XanclockTranslations/category-theory-illustrated-vi](https://github.com/XanclockTranslations/category-theory-illustrated-vi).
+
 Nhánh `vietnamese-translation` bắt đầu từ `english-format-fork` tại commit
 `2cc1144c92ca1dfb841039308f57e49754b052ba`. Bản nguồn của tác giả được giữ ở
 `9ea2ea38052e82176cccb25c4e75709dbb064d0d`.
 
 AI được sử dụng: **GPT-6.1 Sol (Ultra)**. Người thực hiện prompting:
-**Bế Trọng Nghĩa @ichxorya**.
+**Bế Trọng Nghĩa**. Đơn vị duy trì: [XanclockTranslations](https://github.com/XanclockTranslations).
 
 Lần duyệt đầu tiên gồm bìa đến hết phần Giới thiệu, trong một commit.
 Ngày 15-10-2026, người dùng cho phép tiếp tục dịch các chương tự động.

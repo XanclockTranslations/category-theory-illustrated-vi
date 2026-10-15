@@ -1,6 +1,8 @@
 # Category Theory Illustrated: Vietnamese adaptation workspace
 
-This is the public adaptation fork of **Category Theory Illustrated** by **Jencel Panic**, maintained at [ichxorya/category-theory-illustrated-vi](https://github.com/ichxorya/category-theory-illustrated-vi). The editable English book layout and the complete Vietnamese machine translation share the same source-driven pipeline.
+Vietnamese translation status: **[Machine Translated, Not Reviewed]**. The translation has not been reviewed by a human and may contain errors in meaning, terminology, or mathematics.
+
+This is the public adaptation fork of **Category Theory Illustrated** by **Jencel Panic**, maintained at [XanclockTranslations/category-theory-illustrated-vi](https://github.com/XanclockTranslations/category-theory-illustrated-vi). The editable English book layout and the complete Vietnamese machine translation share the same source-driven pipeline.
 
 Read the [author's web book](https://abuseofnotation.github.io/category-theory-illustrated/) and visit the [original repository](https://github.com/abuseofnotation/category-theory-illustrated). Please support the author through the [official editions](https://abuseofnotation.gumroad.com/) or [Patreon](https://www.patreon.com/abuseofnotation).
 
@@ -17,7 +19,8 @@ The original exports remain under [`Panic, Jencel/Category Theory Illustrated/`]
 ## Branches
 
 - **`main`** is the unchanged upstream base, initially pinned to `9ea2ea38052e82176cccb25c4e75709dbb064d0d`.
-- **`english-format-fork`** contains this adaptation and is the fork's default working branch. It starts directly from `main`.
+- **`english-format-fork`** is the English layout base for this adaptation. It starts directly from `main`.
+- **`vietnamese-translation`** contains the Vietnamese translation and is the fork's current default branch.
 - Future translation branches should start from **`english-format-fork`**, so they inherit the cover, renderer, captions, and navigation.
 
 For example, when starting translation later:
@@ -27,12 +30,12 @@ git switch english-format-fork
 git switch -c vietnamese-translation
 ```
 
-Keep the author's repository as `upstream` and this personal fork as `origin`. Do not merge our layout changes into `main` merely to start a translation branch.
+Keep the author's repository as `upstream` and this organization fork as `origin`. Do not merge our layout changes into `main` merely to start a translation branch.
 
 ## Vietnamese machine translation
 
 The `vietnamese-translation` branch contains the Vietnamese machine translation.
-AI: **GPT-6.1 Sol (Ultra)**. Prompting: **Bế Trọng Nghĩa @ichxorya**.
+AI: **GPT-6.1 Sol (Ultra)**. Prompting: **Bế Trọng Nghĩa**. Maintained by [XanclockTranslations](https://github.com/XanclockTranslations).
 The first commit covered the cover through the Introduction. On 15 October 2026,
 the user authorized automatic continuation through the chapters, one commit per
 chapter. The Introduction and all eight published chapters are translated,

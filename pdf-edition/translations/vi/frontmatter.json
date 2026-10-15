@@ -5,7 +5,7 @@
   "title": "Lý thuyết phạm trù minh hoạ",
   "editionLabel": "Bản dịch máy tiếng Việt",
   "status": "machine-translation-complete-awaiting-human-review",
-  "translationAttribution": { "ai": "GPT-6.1 Sol (Ultra)", "prompting": "Bế Trọng Nghĩa", "handle": "@ichxorya" },
+  "translationAttribution": { "ai": "GPT-6.1 Sol (Ultra)", "prompting": "Bế Trọng Nghĩa", "organization": "XanclockTranslations" },
   "chapterSources": {
     "_chapters/00_about.md": "translations/vi/00_about.md",
     "_chapters/01_set.md": "translations/vi/01_set.md",
@@ -32,6 +32,6 @@
     "contentsLink": "Mục lục",
     "coverAlt": "Lý thuyết phạm trù minh hoạ, của Jencel Panic",
     "runningHeader": "LÝ THUYẾT PHẠM TRÙ - MINH HOẠ",
-    "pdfSubject": "Bản dịch máy tiếng Việt; GPT-6.1 Sol (Ultra); prompting: Bế Trọng Nghĩa @ichxorya"
+    "pdfSubject": "[Machine Translated, Not Reviewed] Bản dịch máy tiếng Việt; GPT-6.1 Sol (Ultra); prompting: Bế Trọng Nghĩa; XanclockTranslations"
   }
 }

@@ -43,7 +43,7 @@ try{
   const toc=[...document.querySelectorAll('.contents a .toc-page')].map(x=>({id:x.dataset.target,page:Number(x.textContent)}));
   const pending=[...document.querySelectorAll('.contents .pending')];
   const notice = norm(document.querySelector('.publication').textContent);
-  return {chapters,headings,toc,language:document.documentElement.lang,attributionVisible:['Bản dịch máy tiếng Việt','GPT-6.1 Sol (Ultra)','Bế Trọng Nghĩa','@ichxorya'].every(s=>notice.includes(s)),pendingCount:pending.length,pendingValid:pending.every(x=>!x.querySelector('a')&&x.querySelector('.toc-page').textContent==='-'),contentsCount:document.querySelectorAll('.contents li').length};
+  return {chapters,headings,toc,language:document.documentElement.lang,attributionVisible:['[Machine Translated, Not Reviewed]','Bản dịch máy tiếng Việt','GPT-6.1 Sol (Ultra)','Bế Trọng Nghĩa','XanclockTranslations'].every(s=>notice.includes(s)),pendingCount:pending.length,pendingValid:pending.every(x=>!x.querySelector('a')&&x.querySelector('.toc-page').textContent==='-'),contentsCount:document.querySelectorAll('.contents li').length};
  },expected);
  console.log(JSON.stringify(html));
 }finally{await browser.close()}

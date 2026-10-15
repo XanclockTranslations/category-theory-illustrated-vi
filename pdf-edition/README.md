@@ -1,5 +1,7 @@
 # English book build
 
+Vietnamese translation status: **[Machine Translated, Not Reviewed]**. Human review is pending; the translation may contain errors in meaning, terminology, or mathematics. The adaptation is maintained at [XanclockTranslations/category-theory-illustrated-vi](https://github.com/XanclockTranslations/category-theory-illustrated-vi).
+
 This adapter builds the maintained 178 × 241 mm book layout of Jencel Panic's **Category Theory Illustrated** in English and Vietnamese. The source is reconciled with the author's fuller supplied EPUB, including additional interludes, addenda, and exercise answers. All eight published chapters now have a Vietnamese machine translation in this editable pipeline.
 
 The [repository README](../readme.md) explains why this independent build exists, including GPT-6.1 Sol Ultra's initial failure to notice the author's existing PDF and EPUB. The author’s chapter Markdown and illustration files remain unchanged.
